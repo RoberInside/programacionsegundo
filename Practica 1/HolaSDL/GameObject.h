@@ -2,6 +2,7 @@
 #define _H_GAMEOBJECT_H_
 #include "Game.h"
 #include "Texture.h"
+#include "GameMap.h"
 
 using namespace std;
 /*Clase abstracta que sirve como padre de todos los objetos del juego*/
@@ -11,15 +12,15 @@ public:
 	struct Position{
 		int x;
 		int y;
-		Position(int x, int y) { this->x = 0; this->y = 0; };
+		Position() { this->x = 0; this->y = 0; };
 		Position(int x, int y) { this->x = x; this->y = y; };
 
-		Position* operator+(Position other) {
+		Position* operator+=(Position other) {
 			this->x += other.x;
 			this->y += other.y;
 			return this;
 		}
-		Position* operator*(int scalar) {
+		Position* operator*=(int scalar) {
 			this->x *= scalar;
 			this->y *= scalar;
 			return this;
@@ -40,7 +41,7 @@ public:
 public:
 	GameObject() {};
 	virtual ~GameObject() {};
-	enum ObjectType{
+	enum class ObjectType{
 		Wall,
 		Empty,
 		Food,

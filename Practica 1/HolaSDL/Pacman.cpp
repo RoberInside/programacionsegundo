@@ -1,8 +1,11 @@
 #include "Pacman.h"
 
 
-Pacman::Pacman() : setType(GameObject::ObjectType::Pacman)
+Pacman::Pacman(int x, int y)
 {
+	_type = ObjectType::Pacman;
+	pos = { x, y };
+
 }
 
 

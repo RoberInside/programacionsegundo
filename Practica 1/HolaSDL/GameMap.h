@@ -1,25 +1,29 @@
 #ifndef _H_GAMEMAP_H_
 #define _H_GAMEMAP_H_
 #include <string>
-#include "MapCell.h"
+#include "GameObject.h"
 
 using namespace std;
 class GameMap
 {
-	typedef enum {
+	enum MapCell_t {
 		Empty,
 		Wall,
 		Food,
 		Vitamins
-	} MapCells;
-
+	};
+	struct MapCell
+	{
+		MapCell_t type;
+		GameObject * obj;
+	};
 public:
 	GameMap(size_t rows, size_t cols);
 	~GameMap();
 
-	bool load(string path);
 	void setAt(GameObject* object, size_t x, size_t y);
-	bool isAt(GameObject* object, size_t x, size_t y);
+	bool isAt(GameObject::ObjectType type, size_t x, size_t y);
+	bool isEmpty(size_t x, size_t y);
 
 	MapCell* at(size_t x, size_t y){ return &board[x*_cols + y]; }
 

@@ -1,10 +1,8 @@
 #include "Character.h"
 
 
-Character::Character(int x, int y)
+Character::Character()
 {
-	pos.x = x;
-	pos.y = y;
 }
 
 void Character::update()
@@ -17,10 +15,27 @@ void Character::draw()
 	//TODO
 }
 
-void Character::move(Position pos)
+void Character::move(Direction dir)
 {
-	if (!collision(pos)) 
-		this->pos = pos;
+	Position last = pos;
+	switch (dir)
+	{
+	case Direction::UP:
+		pos += UP;
+		break;
+	case Direction::DOWN:
+		pos += DOWN;
+		break;
+	case Direction::RIGHT:
+		pos += RIGHT;
+		break;
+	case Direction::LEFT:
+		pos += LEFT;
+		break;
+	default:
+		break;
+	}
+	if (collision(pos)) pos = last;
 }
 
 bool Character::collision(Position target)

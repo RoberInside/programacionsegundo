@@ -5,7 +5,7 @@ class Pacman :
 	public Character
 {
 public:
-	Pacman();
+	Pacman(int x, int y);
 	~Pacman();
 };
 
