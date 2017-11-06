@@ -1,11 +1,31 @@
 #include "Character.h"
 
 
-Character::Character()
+Character::Character(int x, int y)
 {
+	pos.x = x;
+	pos.y = y;
 }
 
-
-Character::~Character()
+void Character::update()
 {
+	controller();
 }
+
+void Character::draw()
+{
+	//TODO
+}
+
+void Character::move(Position pos)
+{
+	if (!collision(pos)) 
+		this->pos = pos;
+}
+
+bool Character::collision(Position target)
+{
+	//TODO
+	return false;
+}
+

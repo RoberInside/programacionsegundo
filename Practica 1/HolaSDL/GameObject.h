@@ -4,8 +4,42 @@
 #include "Texture.h"
 
 using namespace std;
+/*Clase abstracta que sirve como padre de todos los objetos del juego*/
 class GameObject {
+	/*Estructura auxiliar para posiciones*/
 public:
+	struct Position{
+		int x;
+		int y;
+		Position(int x, int y) { this->x = 0; this->y = 0; };
+		Position(int x, int y) { this->x = x; this->y = y; };
+
+		Position* operator+(Position other) {
+			this->x += other.x;
+			this->y += other.y;
+			return this;
+		}
+		Position* operator*(int scalar) {
+			this->x *= scalar;
+			this->y *= scalar;
+			return this;
+		}
+		Position* operator=(Position other) {
+			this->x = other.x;
+			this->y = other.y;
+			return this;
+		}
+		bool operator== (Position other) {
+			return (this->x == other.x) && (this->y == other.y);
+		}
+		bool operator!= (Position other) {
+			return !(*(this) == other);
+		}
+
+	};
+public:
+	GameObject() {};
+	virtual ~GameObject() {};
 	enum ObjectType{
 		Wall,
 		Empty,
@@ -14,22 +48,17 @@ public:
 		Ghost,
 		Pacman
 	};
-private:
-	Texture* texture = nullptr; // Puntero a su textura
+protected:
+	Position pos;
+	Texture* texture; // Puntero a su textura
 	Game* game; // Puntero al juego al que pertenece
 	size_t texRow, texCol; // Posición del frame en la textura
-
-private:
 	ObjectType _type;
-protected:
-	void setType(ObjectType type);
-
 public:
-	GameObject();
 	~GameObject();
-	void render();
-	void update();
-	ObjectType getType();
+	virtual void render() {} = 0;
+	virtual void update() {} = 0;
+	ObjectType getType() { return _type; };
 };
 
 #endif
