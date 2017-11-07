@@ -3,11 +3,10 @@
 #pragma once
 #include <SDL.h>
 #include <vector>
-
+#include "Pacman.h"
 #include "Texture.h"
 #include "GameObject.h"
 #include "GameMap.h"
-#include "MapCell.h"
 #include <string>
 #include <iostream>
 #include <fstream>
