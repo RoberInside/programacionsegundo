@@ -10,16 +10,26 @@ GameMap::GameMap(size_t rows, size_t cols)
 
 GameMap::~GameMap()
 {
-	for (size_t i = 0; i < _rows*_cols; i++)
-	{
-		delete board[i].obj;
-		board[i].obj = nullptr;
-	}
-	delete board;
-	board = nullptr;
 }
 
-void GameMap::setAt(GameObject * object, size_t x, size_t y)
+void GameMap::setAt(MapCell_t type, size_t x, size_t y)
 {
-	board[x*_cols + y].obj = object;
+	board[x][y] = type;
 }
+
+bool GameMap::isAt(MapCell_t type, size_t x, size_t y)
+{
+	return board[x][y] == type;
+}
+
+bool GameMap::isEmpty(size_t x, size_t y)
+{
+	return board[x][y] == Empty;
+}
+
+bool GameMap::isEmpty(Position pos)
+{
+	return isEmpty(pos.x, pos.y);
+}
+
+

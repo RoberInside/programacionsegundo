@@ -13,3 +13,8 @@ Pacman::Pacman(int x, int y)
 Pacman::~Pacman()
 {
 }
+
+Direction Pacman::controller()
+{
+	return game->getNextDirection();
+}

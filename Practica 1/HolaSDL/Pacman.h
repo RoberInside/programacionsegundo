@@ -9,6 +9,9 @@ class Pacman :
 public:
 	Pacman(int x, int y);
 	~Pacman();
+
+private:
+	Direction controller();
 };
 
 #endif

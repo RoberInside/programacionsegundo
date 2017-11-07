@@ -13,6 +13,18 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Archivos de código fuente\Objects">
+      <UniqueIdentifier>{7d98ca3e-7668-4961-b605-a4e853b413ff}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de código fuente\Abstracts">
+      <UniqueIdentifier>{8fae9e74-43f1-429c-8e88-656dc8c40840}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de encabezado\Objects">
+      <UniqueIdentifier>{70989956-ce57-499f-996b-f21c598f809e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de encabezado\Abstacts">
+      <UniqueIdentifier>{a69b7861-5b99-4c17-88f7-55550320d2e6}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -21,30 +33,33 @@
     <ClCompile Include="Game.cpp">
       <Filter>Archivos de código fuente</Filter>
     </ClCompile>
-    <ClCompile Include="GameObject.cpp">
-      <Filter>Archivos de código fuente</Filter>
-    </ClCompile>
     <ClCompile Include="Texture.cpp">
       <Filter>Archivos de código fuente</Filter>
     </ClCompile>
     <ClCompile Include="GameMap.cpp">
       <Filter>Archivos de código fuente</Filter>
     </ClCompile>
+    <ClCompile Include="GameObject.cpp">
+      <Filter>Archivos de código fuente\Abstracts</Filter>
+    </ClCompile>
     <ClCompile Include="Character.cpp">
-      <Filter>Archivos de código fuente</Filter>
+      <Filter>Archivos de código fuente\Abstracts</Filter>
     </ClCompile>
     <ClCompile Include="Ghost.cpp">
-      <Filter>Archivos de código fuente</Filter>
+      <Filter>Archivos de código fuente\Objects</Filter>
     </ClCompile>
     <ClCompile Include="Pacman.cpp">
+      <Filter>Archivos de código fuente\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="Food.cpp">
+      <Filter>Archivos de código fuente\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="Vitamin.cpp">
       <Filter>Archivos de código fuente</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h">
-      <Filter>Archivos de encabezado</Filter>
-    </ClInclude>
-    <ClInclude Include="GameObject.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
     <ClInclude Include="Texture.h">
@@ -53,13 +68,25 @@
     <ClInclude Include="GameMap.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
-    <ClInclude Include="Character.h">
-      <Filter>Archivos de encabezado</Filter>
-    </ClInclude>
     <ClInclude Include="Ghost.h">
-      <Filter>Archivos de encabezado</Filter>
+      <Filter>Archivos de encabezado\Objects</Filter>
     </ClInclude>
     <ClInclude Include="Pacman.h">
+      <Filter>Archivos de encabezado\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="Character.h">
+      <Filter>Archivos de encabezado\Abstacts</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObject.h">
+      <Filter>Archivos de encabezado\Abstacts</Filter>
+    </ClInclude>
+    <ClInclude Include="Food.h">
+      <Filter>Archivos de encabezado\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="Vitamin.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="Position.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
   </ItemGroup>
