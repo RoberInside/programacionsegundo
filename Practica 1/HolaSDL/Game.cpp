@@ -8,7 +8,6 @@ Game::Game()
 	initSDL();
 	initMedia();
 	initBoard(pathToLevels[currentLevel]);//TODO: poner una ruta por defecto, implementar un mapa
-	setTileSize(tile);
 }
 
 Game::~Game()
@@ -18,21 +17,12 @@ Game::~Game()
 }
 
 //Auxiliar function///
-void Game::setTileSize(SDL_Rect &rawTile) {
-	rawTile.w = winWidth / gameMap->getRows();
-	rawTile.h = winHeight / gameMap->getCols();
+void Game::setTileSize(size_t rows, size_t cols) {
+	tile.x = tile.y = 0;
+	tile.w = winWidth / cols;
+	tile.h = winHeight / rows;
 }
 
-bool Game::playerCollision(GameObject::ObjectType &type)
-{
-	bool collision = false;
-	int i = 1;
-	while (!collision && i < gameObjects.size()) {
-		collision = pacman->getPosition() == gameObjects[i]->getPosition();
-	}
-	if (collision) type = gameObjects[i]->getType();
-	return collision;
-}
 
 void Game::rectToTile(SDL_Rect & rawRect)
 {
@@ -40,23 +30,31 @@ void Game::rectToTile(SDL_Rect & rawRect)
 	rawRect.h = tile.h;
 }
 
+bool Game::canMoveTo(int x, int y)
+{
+	return gameMap->isEmpty(x, y);
+}
+
+string Game::getTextPath(Texture_t text)
+{
+	return texts_paths[text];
+}
+
 bool Game::initSDL()
 {
-	bool success = false;
+	bool success = true;
 	size_t winX, winY;	
 	winX = winY = SDL_WINDOWPOS_CENTERED;	
 	SDL_Init(SDL_INIT_EVERYTHING);
 	window = SDL_CreateWindow("Pacman", winX, winY, winWidth, winHeight, SDL_WINDOW_SHOWN);
 	renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
 	if (window == nullptr || renderer == nullptr) {
-		cout << "Error	initializing	SDL\n";
-		success = true;
+		cout << "Error initializing SDL\n";
+		success = false;
 	}
-	else success = false;
-
-		return success;
+	return success;
 }
-bool Game::closeSDL()
+void Game::closeSDL()
 {
 	SDL_DestroyRenderer(renderer);
 	renderer = nullptr;
@@ -68,88 +66,95 @@ bool Game::closeSDL()
 
 bool Game::initMedia()
 {
-	pathToLevels = {""};//TODO
-
+	pathToLevels = {
+		"..\\maps\\test1.dat"
+	};//TODO
+	texts_paths.resize(9);
+	texts_paths[tWall] = "..\\images\\wall.png";
+	texts_paths[tPacman] = "..\\images\\pacman.png";
+	texts_paths[tGhost1] = "..\\images\\ghost1.png";
+	texts_paths[tGhost2] = "..\\images\\ghost2.png";
+	texts_paths[tGhost3] = "..\\images\\ghost3.png";
+	texts_paths[tGhost4] = "..\\images\\ghost4.png";
+	texts_paths[tFood] = "..\\images\\food.png";
+	texts_paths[tVitamin] = "..\\images\\vitamin.png";
+	texts_paths[tEmpty] = "..\\images\\empty.png";
+	return true;
 }
-bool Game::freeMedia()
+void Game::freeMedia()
 {
-	for (auto o : gameObjects)
-		delete o;
+	delete gameMap;
+	delete pacman;
+	/*
+	for (size_t i = 0; i < 4; i++)
+	{
+		delete ghosts[i];
+	}
+	*/
 }
 
 bool Game::initBoard(string path){
 	
-	
 	ifstream in(path);
 	char buffer;
-	int rows, cols;
+	size_t rows, cols, ghost_count = 0;
 	in >> rows >> cols;
-	gameMap = new GameMap(rows, cols);
-	//Every game has only a Pacman, for simplycity the first object in array will always be the player
-	gameObjects.push_back(pacman);
+	setTileSize(rows, cols);
+	gameMap = new GameMap(this, rows, cols);
 	for (size_t i = 0; i < rows; i++)
 	{
 		for (size_t j = 0; j < cols; j++)
 		{
 			in >> buffer;
 			if (buffer == '0'){
-				gameMap->setAt(Empty, i, j);
+				gameMap->setAt(MapCell_t::Empty, i, j);
 			}else if (buffer == '1'){
-				gameMap->setAt(Wall, i, j);
+				gameMap->setAt(MapCell_t::Wall, i, j);
 			}else if (buffer == '2'){
-				gameMap->setAt(Foods, i, j);
-				gameObjects.push_back(new Food(i, j));
+				gameMap->setAt(MapCell_t::Food, i, j);
 			}else if (buffer == '3'){
-				gameMap->setAt(Vitamins, i, j);
-				gameObjects.push_back(new Vitamin(i, j));
+				gameMap->setAt(MapCell_t::Vitamins, i, j);
 			}else if (buffer == '9'){
-				gameMap->setAt(Empty, i, j);
-				pacman = new Pacman(i, j);
+				gameMap->setAt(MapCell_t::Empty, i, j);
+				pacman = new Pacman(this, i, j);
 			}else if (buffer == '5' || buffer == '6' || buffer == '7' || buffer == '8'){
-				gameMap->setAt(Empty, i, j);
-				//gameObjects.push_back(new Ghost(i, j))
+				gameMap->setAt(MapCell_t::Empty, i, j);
+				//ghosts[ghost_count];
+				ghost_count++;
 			}
 		}
 	}
-	
+	return true;
 }
-//bool Game::freeBoard(){}
-/*bool Game::saveBoard(string path){
 
-	fstream out(path, ios::out);
-	for (size_t i = 0; i < gameMap->getRows(); i++)
-	{
-		for (size_t j = 0; j < gameMap->getCols(); j++)
-		{
-			out << gameMap->at(i, j)<<" ";
-		}
-		out << endl;
-	}
-	out.close();
-
-
-
-}*/
 void Game::run() {
 
 	Uint32 delta;
 	Uint32 lastUpdate = SDL_GetTicks();
 	while (!exit) {
 		delta = SDL_GetTicks() - lastUpdate;
-		update(delta);
+		//update();
 		lastUpdate = SDL_GetTicks();
 		render();
 		handleEvents();
 	}
 }
-void Game::update(Uint32 delta)
+void Game::update()
 {
-	for(auto o : gameObjects)
-		o->update();
+	pacman->update();
+	/*
+	for (auto g : ghosts) {
+		g->update();
+	}
+	*/
 }
 void Game::render()
 {
 	SDL_RenderClear(renderer);
+	
+	gameMap->render();
+	//pacman->render();
+	//for (Ghost* g : ghosts) g->update();
 
 	SDL_RenderPresent(renderer);
 }
@@ -168,30 +173,22 @@ void Game::handleEvents()
 			switch (e.key.keysym.sym)
 			{
 			case SDLK_UP:
-				nextDir = Direction{ 0, 1 };
+				nextDir = Direction::UP;
 				break;
 			case SDLK_DOWN:
-				nextDir = Direction{ 0, -1 };
+				nextDir = Direction::DOWN;
 				break;
 			case SDLK_RIGHT:
-				nextDir = Direction{ 1, 0 };
+				nextDir = Direction::RIGHT;
 				break;
 			case SDLK_LEFT:
-				nextDir = Direction{ -1, 0 };
+				nextDir = Direction::LEFT;
 				break;
 			case SDLK_ESCAPE:
 				exit = true;
 			default:
 				break;
 			}
-			break;
-		case SDL_MOUSEBUTTONDOWN:
-			break;
-		case SDL_MOUSEBUTTONUP:
-			break;
-		default:
-			break;
 		}
 	}
-
 }

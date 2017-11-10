@@ -1,32 +1,47 @@
 #ifndef _H_GAMEMAP_H_
 #define _H_GAMEMAP_H_
-#include <string>
-#include "Position.h"
+#include "Texture.h"
 
+#include <string>
+#include <vector>
+class Game;
 using namespace std;
-enum MapCell_t {
+enum class MapCell_t {
 	Empty,
 	Wall,
-	Foods,
+	Food,
 	Vitamins
 };
 
 class GameMap
 {
+	friend class Game;	
 	
 public:
-	GameMap(size_t rows, size_t cols);
+	GameMap(Game* game, size_t rows, size_t cols);
 	~GameMap();
 
 	void setAt(MapCell_t type, size_t x, size_t y);
 	bool isAt(MapCell_t type, size_t x, size_t y);
 	bool isEmpty(size_t x, size_t y);
-	bool isEmpty(Position pos);
 
 	size_t getRows() { return _rows;}
 	size_t getCols() { return _cols; }
+
+	void render();
 private:
+	bool isInside(int x, int y);
 	size_t _cols, _rows;
-	vector<vector<MapCell_t>> board;
+	MapCell_t** board;
+
+	Game* pGame;
+
+	SDL_Rect rect;
+
+	Texture* wallText;
+	Texture* emptyText;
+	Texture* vitiminText;
+	Texture* foodText;
+
 };
 #endif

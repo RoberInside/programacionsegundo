@@ -1,17 +1,26 @@
 #ifndef _H_PACMAN_H_
 #define _H_PACMAN_H_
-#include "Character.h"
+#include "Texture.h"
 class Game; //evitar recursion ciclica
 
-class Pacman :
-	public Character
+class Pacman
 {
 public:
-	Pacman(int x, int y);
+	Pacman(Game* g, int x, int y);
 	~Pacman();
 
+	void update();
+	void render();
 private:
-	Direction controller();
+	int _x;
+	int _y;
+	Game* pGame;
+	SDL_Rect _rect;
+	Texture* texture;
+	void move();
+	void updateRect();
+
+
 };
 
 #endif

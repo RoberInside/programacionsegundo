@@ -3,10 +3,9 @@
 #pragma once
 #include <SDL.h>
 #include <vector>
-#include "Position.h"
 #include "Pacman.h"
 #include "Texture.h"
-#include "GameObject.h"
+#include "Ghost.h"
 #include "GameMap.h"
 #include "Food.h"
 #include "Vitamin.h"
@@ -14,9 +13,6 @@
 #include <iostream>
 #include <fstream>
 #define MAX_TICKS_PER_SECOND 2
-#define MAX_LEVELS
-
-using Direction = Position;
 
 using namespace std;
 
@@ -28,27 +24,34 @@ public:
 	~Game();
 	void run();
 
-	Direction getNextDirection() {
-		return nextDir; 
+	enum Texture_t {
+		tWall = 0,
+		tPacman = 1,
+		tGhost1 = 2,
+		tGhost2 = 3,
+		tGhost3 = 4,
+		tGhost4 = 5,
+		tFood = 6,
+		tVitamin = 7,
+		tEmpty = 8
 	};
-	bool playerCollision(GameObject::ObjectType &type);
-	SDL_Renderer* getRenderer() {
-		return pRenderer;
-	}
-	void rectToTile(SDL_Rect& rawRect);
+	enum class Direction{UP, DOWN, RIGHT, LEFT};
+	void rectToTile(SDL_Rect & rawRect);
+	SDL_Renderer* getRenderer() { return renderer; }
+	Direction getNextDir() { return nextDir; }
+	bool canMoveTo(int x, int y);
+	string getTextPath(Texture_t text);
 private:
 	bool initSDL();
-	bool closeSDL();
+	void closeSDL();
 	bool initBoard(string path);
-	void setTileSize(SDL_Rect& rawTile);
-	/*bool saveBoard(string path);*/
+	void setTileSize(size_t rows, size_t cols);
 
 	bool initMedia();
-	bool freeMedia();
-	//bool freeBoard();
+	void freeMedia();
 
 	void render();
-	void update(Uint32 delta);
+	void update();
 	void handleEvents();
 private:
 	SDL_Window* window = nullptr;
@@ -56,15 +59,15 @@ private:
 	size_t winWidth = 800;
 	size_t winHeight = 600;
 	bool exit = false;
-	vector <GameObject*> gameObjects;
 	vector <string> pathToLevels;
+	vector <string> texts_paths;
 	size_t currentLevel;
-	GameObject* pacman;
+	//Ghost* ghosts[4] = { nullptr, nullptr, nullptr, nullptr };
 	GameMap* gameMap;
+	Pacman* pacman;
 	Direction nextDir;
 	SDL_Event e;
 	SDL_Rect tile;
-	SDL_Renderer* pRenderer;
 
 };
 #endif // !_H_GAME_H_

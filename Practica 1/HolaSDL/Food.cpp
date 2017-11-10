@@ -3,15 +3,18 @@
 
 
 Food::Food(int x, int y) {
-	this->pos = { x, y };
-}
-Food::Food(Position pos)
-{
-	this->pos = pos;
-}
 
+}
 
 Food::~Food()
 {
 }
-void Food::render() {}
+
+void Food::update()
+{
+	//pseude code
+	/*
+	check if collision with pacman if true pacman can kill ghosts
+	pGame->pacman->setPower()
+	*/
+}

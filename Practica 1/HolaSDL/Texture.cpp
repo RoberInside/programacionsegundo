@@ -1,44 +1,41 @@
 #include "Texture.h"
+#include <iostream>
 
-
-Texture::Texture(size_t w, size_t h)
+Texture::Texture()
 {
 	texture = nullptr;
-	_w = w;
-	_h = h;
-	w = 0;
-	h = 0;
 }
 
 
 Texture::~Texture()
 {
+	SDL_DestroyTexture(texture);
 	texture = nullptr;
 }
-bool Texture::load(SDL_Renderer* renderer, string filename, size_t numRows = 1, size_t numCols = 1) {
+bool Texture::load(SDL_Renderer* renderer, string filename) {
 
-	bool success = false;
+	bool success = true;
 	SDL_Surface* tmpSur = nullptr;
 
 	tmpSur = IMG_Load(filename.c_str());
-
-	texture = SDL_CreateTextureFromSurface(renderer, tmpSur);
-	_h = tmpSur->clip_rect.h;
-	_w = tmpSur->clip_rect.w;
-	SDL_FreeSurface(tmpSur);
-	success = texture != nullptr;
+	if (tmpSur == nullptr) { std::cout << "Unable to load image "<<filename<<" !" << endl; success = false; }
+	else {
+		texture = SDL_CreateTextureFromSurface(renderer, tmpSur);
+		SDL_FreeSurface(tmpSur);
+		success = texture != nullptr;
+	}
 
 
 	return success;
 
 }
-void Texture::render(SDL_Renderer* renderer, const SDL_Rect& rect, SDL_RendererFlip flip = SDL_FLIP_NONE) {
+void Texture::render(SDL_Renderer* renderer, SDL_Rect* const &rect) {
 	
 	//rectF = rect;
-	SDL_RenderCopy(renderer, texture, &rectF, nullptr);
+	SDL_RenderCopy(renderer, texture, nullptr, rect);
 
 }
-void Texture::renderFrame(SDL_Renderer* renderer, const SDL_Rect& destRect, int row, int col, SDL_RendererFlip flip = SDL_FLIP_NONE) {
+void Texture::renderFrame() {
 
 
 	
