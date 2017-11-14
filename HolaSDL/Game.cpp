@@ -19,8 +19,8 @@ Game::~Game()
 //Auxiliar function///
 void Game::setTileSize(size_t rows, size_t cols) {
 	tile.x = tile.y = 0;
-	tile.w = winWidth / cols;
-	tile.h = winHeight / rows;
+	tile.w = winWidth / cols + 1; // aqui tambien se ve que suda de las cols y rows que le damos y sino pongo esos numeros no se pinta en proporcion a la pantalla 
+	tile.h = winHeight / rows + 1; // actual (800x600)
 }
 
 
@@ -43,8 +43,8 @@ string Game::getTextPath(Texture_t text)
 bool Game::initSDL()
 {
 	bool success = true;
-	size_t winX, winY;	
-	winX = winY = SDL_WINDOWPOS_CENTERED;	
+	size_t winX, winY;
+	winX = winY = SDL_WINDOWPOS_CENTERED;
 	SDL_Init(SDL_INIT_EVERYTHING);
 	window = SDL_CreateWindow("Pacman", winX, winY, winWidth, winHeight, SDL_WINDOW_SHOWN);
 	renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
@@ -88,37 +88,43 @@ void Game::freeMedia()
 	/*
 	for (size_t i = 0; i < 4; i++)
 	{
-		delete ghosts[i];
+	delete ghosts[i];
 	}
 	*/
 }
 
-bool Game::initBoard(string path){
-	
+bool Game::initBoard(string path) {
+
 	ifstream in(path);
 	char buffer;
 	size_t rows, cols, ghost_count = 0;
 	in >> rows >> cols;
 	setTileSize(rows, cols);
-	gameMap = new GameMap(this, rows, cols);
+	gameMap = new GameMap(this, rows + 2, cols + 1); // rows +2 wtff?? es como si no cogiese todas las rows que se le asignan y si pongo cols + 1 el level01 se pinta bien, no entiendo una puta mierda xddd
 	for (size_t i = 0; i < rows; i++)
 	{
 		for (size_t j = 0; j < cols; j++)
 		{
 			in >> buffer;
-			if (buffer == '0'){
-				gameMap->setAt(MapCell_t::Empty, i, j);
-			}else if (buffer == '1'){
-				gameMap->setAt(MapCell_t::Wall, i, j);
-			}else if (buffer == '2'){
-				gameMap->setAt(MapCell_t::Food, i, j);
-			}else if (buffer == '3'){
-				gameMap->setAt(MapCell_t::Vitamins, i, j);
-			}else if (buffer == '9'){
-				gameMap->setAt(MapCell_t::Empty, i, j);
-				pacman = new Pacman(this, i, j);
-			}else if (buffer == '5' || buffer == '6' || buffer == '7' || buffer == '8'){
-				gameMap->setAt(MapCell_t::Empty, i, j);
+			if (buffer == '0') {
+				gameMap->setAt(MapCell_t::Empty, j, i); //estaban la i y la j al reves
+			}
+			else if (buffer == '1') {
+				gameMap->setAt(MapCell_t::Wall, j, i);
+			}
+			else if (buffer == '2') {
+				gameMap->setAt(MapCell_t::Food, j, i);
+			}
+			else if (buffer == '3') {
+				gameMap->setAt(MapCell_t::Vitamins, j, i);
+				//no esta asignado el 4 para la puerta del recinto de los fantasmas
+			}
+			else if (buffer == '9') {
+				gameMap->setAt(MapCell_t::Empty, j, i);
+				pacman = new Pacman(this, j, i);
+			}
+			else if (buffer == '5' || buffer == '6' || buffer == '7' || buffer == '8') {
+				gameMap->setAt(MapCell_t::Empty, j, i);
 				//ghosts[ghost_count];
 				ghost_count++;
 			}
@@ -144,14 +150,14 @@ void Game::update()
 	pacman->update();
 	/*
 	for (auto g : ghosts) {
-		g->update();
+	g->update();
 	}
 	*/
 }
 void Game::render()
 {
 	SDL_RenderClear(renderer);
-	
+
 	gameMap->render();
 	//pacman->render();
 	//for (Ghost* g : ghosts) g->update();

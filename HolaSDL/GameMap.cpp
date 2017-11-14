@@ -2,9 +2,9 @@
 #include "Game.h"
 
 
-GameMap::GameMap(Game* game, size_t rows, size_t cols):pGame(game), _rows(rows), _cols(cols)
+GameMap::GameMap(Game* game, size_t rows, size_t cols) :pGame(game), _rows(rows), _cols(cols)
 {
-	board = new MapCell_t*[rows];
+	board = new MapCell_t*[rows + 2];
 	for (size_t i = 0; i < rows; i++)
 	{
 		board[i] = new MapCell_t[cols];
@@ -14,13 +14,13 @@ GameMap::GameMap(Game* game, size_t rows, size_t cols):pGame(game), _rows(rows),
 
 	wallText = new Texture();
 	wallText->load(pGame->getRenderer(), pGame->getTextPath(Game::tWall));
-	
+
 	vitiminText = new Texture();
 	vitiminText->load(pGame->getRenderer(), pGame->getTextPath(Game::tVitamin));
 
 	foodText = new Texture();
 	foodText->load(pGame->getRenderer(), pGame->getTextPath(Game::tFood));
-	
+
 	emptyText = new Texture();
 	emptyText->load(pGame->getRenderer(), pGame->getTextPath(Game::tEmpty));
 
@@ -60,7 +60,7 @@ bool GameMap::isEmpty(size_t x, size_t y)
 
 void GameMap::render()
 {
-	SDL_Rect rect;
+	//SDL_Rect rect;
 	pGame->rectToTile(rect);
 	for (size_t i = 0; i < _rows; i++)
 	{
@@ -85,12 +85,12 @@ void GameMap::render()
 			default:
 				break;
 			}
-			
+
 		}
 	}
 }
 
-bool GameMap::isInside(int x, int y)
+bool GameMap::isInside(int y, int x)// estaba mal planteado
 {
 	return (x >= 0 && y >= 0 && x <(int)_cols && y < (int)_rows);
 }
