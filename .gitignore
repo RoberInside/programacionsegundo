@@ -3,7 +3,7 @@
 
 ### SDL ###
 SDL2_image-2.0.1/
-SDL2.2.0.4/
+SDL2-2.0.4/
 ### C++ ###
 # Prerequisites
 *.d
