@@ -67,7 +67,7 @@ void GameMap::render()
 	pGame->rectToTile(rect);
 	for (size_t i = 0; i < _rows; i++)
 	{
-		for (size_t j = 0; j < _cols +1; j++)
+		for (size_t j = 0; j < _cols; j++)
 		{
 			rect.y = i * rect.h; //preguntar
 			rect.x = j * rect.w;

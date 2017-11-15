@@ -73,7 +73,7 @@ bool Game::initMedia()
 		"..\\maps\\level03.dat",
 		"..\\maps\\level04.dat",
 		"..\\maps\\level05.dat"
-	};//TODO
+	};
 	texts_paths.resize(9);
 	texts_paths[tWall] = "..\\images\\wall.png";
 	texts_paths[tPacman] = "..\\images\\pacman.png";
@@ -106,7 +106,7 @@ bool Game::initBoard(string path) {
 	in >> rows >> cols;
 	setTileSize(rows, cols);
 
-	gameMap = new GameMap(this, rows, cols ); 
+	gameMap = new GameMap(this, rows, cols); 
 
 	for (size_t i = 0; i < rows; i++)
 	{
@@ -115,7 +115,7 @@ bool Game::initBoard(string path) {
 			in >> buffer;
 
 			if (buffer == '0') {
-				gameMap->setAt(MapCell_t::Empty, i, j); //estaban la i y la j al reves
+				gameMap->setAt(MapCell_t::Empty, i, j); 
 			}
 			else if (buffer == '1') {
 				gameMap->setAt(MapCell_t::Wall, i, j);
@@ -201,8 +201,9 @@ void Game::handleEvents()
 				break;
 			case SDLK_ESCAPE:
 				exit = true;
+				break;
 			case SDLK_PLUS:
-				currentLevel++;
+				Game::currentLevel++;
 				break;
 			default:
 				break;
