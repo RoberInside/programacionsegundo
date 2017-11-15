@@ -201,10 +201,7 @@ void Game::handleEvents()
 				break;
 			case SDLK_ESCAPE:
 				exit = true;
-				break;
-			case SDLK_PLUS:
-				Game::currentLevel++;
-				break;
+				
 			default:
 				break;
 			}

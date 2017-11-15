@@ -31,12 +31,19 @@ bool Texture::load(SDL_Renderer* renderer, string filename) {
 }
 void Texture::render(SDL_Renderer* renderer, SDL_Rect* const &rect) {
 	
-	//rectF = rect;
+	
 	SDL_RenderCopy(renderer, texture, nullptr, rect);
 
 }
-void Texture::renderFrame() {
+void Texture::renderFrame(SDL_Renderer* renderer, const SDL_Rect& destRect,
+	int row, int col, SDL_RendererFlip flip) const {
 
-
+	SDL_Rect rect;
+	
+	rect.x = frameW * col;
+	rect.y = frameH * row;
+	rect.w = frameW;
+	rect.h = frameH;
+	SDL_RenderCopyEx(renderer, texture, &rect, &destRect, 0, 0, flip);
 	
 }

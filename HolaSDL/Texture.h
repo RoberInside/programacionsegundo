@@ -9,7 +9,9 @@ using namespace std;
 class Texture {
 private:
 	SDL_Texture* texture = nullptr;
-	SDL_Rect rectF, destRect; //rectangulo fuente y rectangulo destacado
+	SDL_Rect destRect; //rectangulo fuente y rectangulo destino
+
+	size_t frameW, frameH;
 
 public:
 	Texture();
@@ -19,7 +21,8 @@ public:
 
 	void render(SDL_Renderer* renderer, SDL_Rect* const &rect);
 
-	void renderFrame(/*TODO*/); //por hacer
+	void renderFrame(SDL_Renderer* renderer, const SDL_Rect& destRect,
+		int row, int col, SDL_RendererFlip flip = SDL_FLIP_NONE) const;
 
 };
 #endif
