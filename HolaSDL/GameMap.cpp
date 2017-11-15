@@ -2,9 +2,11 @@
 #include "Game.h"
 
 
-GameMap::GameMap(Game* game, size_t rows, size_t cols):pGame(game), _rows(rows), _cols(cols)
+GameMap::GameMap(Game* game, size_t rows, size_t cols) :pGame(game), _rows(rows), _cols(cols)
 {
+
 	board = new MapCell_t*[rows +2];
+
 	for (size_t i = 0; i < rows; i++)
 	{
 		board[i] = new MapCell_t[cols];
@@ -14,13 +16,13 @@ GameMap::GameMap(Game* game, size_t rows, size_t cols):pGame(game), _rows(rows),
 
 	wallText = new Texture();
 	wallText->load(pGame->getRenderer(), pGame->getTextPath(Game::tWall));
-	
+
 	vitiminText = new Texture();
 	vitiminText->load(pGame->getRenderer(), pGame->getTextPath(Game::tVitamin));
 
 	foodText = new Texture();
 	foodText->load(pGame->getRenderer(), pGame->getTextPath(Game::tFood));
-	
+
 	emptyText = new Texture();
 	emptyText->load(pGame->getRenderer(), pGame->getTextPath(Game::tEmpty));
 
@@ -85,7 +87,7 @@ void GameMap::render()
 			default:
 				break;
 			}
-			
+
 		}
 	}
 }
