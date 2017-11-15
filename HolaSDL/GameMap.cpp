@@ -5,7 +5,7 @@
 GameMap::GameMap(Game* game, size_t rows, size_t cols) :pGame(game), _rows(rows), _cols(cols)
 {
 
-	board = new MapCell_t*[rows +2];
+	board = new MapCell_t*[rows];
 
 	for (size_t i = 0; i < rows; i++)
 	{
@@ -62,14 +62,15 @@ bool GameMap::isEmpty(size_t x, size_t y)
 
 void GameMap::render()
 {
+
 	//SDL_Rect rect;
 	pGame->rectToTile(rect);
 	for (size_t i = 0; i < _rows; i++)
 	{
-		for (size_t j = 0; j < _cols ; j++)
+		for (size_t j = 0; j < _cols +1; j++)
 		{
-			rect.x = i * rect.w;
-			rect.y = j * rect.h;
+			rect.y = i * rect.h; //preguntar
+			rect.x = j * rect.w;
 			switch (board[i][j])
 			{
 			case MapCell_t::Wall:
@@ -92,8 +93,8 @@ void GameMap::render()
 	}
 }
 
-bool GameMap::isInside(int y, int x)// estaba mal planteado
+bool GameMap::isInside(int x, int y)// estaba mal planteado
 {
-	return (x >= 0 && y >= 0 && x <(int)_cols && y < (int)_rows);
+	return (x >= 0 && y >= 0 && y <(int)_cols && x < (int)_rows);
 }
 
