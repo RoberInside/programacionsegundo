@@ -54,7 +54,7 @@ bool GameMap::isAt(MapCell_t type, size_t x, size_t y)
 
 bool GameMap::isEmpty(size_t x, size_t y)
 {
-	return (isInside(x, y) && board[x][y] == MapCell_t::Empty);
+	return (isInside(x, y) && board[x][y] != MapCell_t::Wall);
 }
 
 void GameMap::render()
@@ -78,7 +78,7 @@ void GameMap::render()
 				vitiminText->render(pGame->getRenderer(), &rect);
 				break;
 			case MapCell_t::Food:
-				wallText->render(pGame->getRenderer(), &rect);
+				foodText->render(pGame->getRenderer(), &rect);
 				break;
 			default:
 				break;

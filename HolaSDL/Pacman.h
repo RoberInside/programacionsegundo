@@ -14,11 +14,11 @@ public:
 private:
 	int _x;
 	int _y;
+	int _col, _row;
 	Game* pGame;
 	SDL_Rect _rect;
 	Texture* texture;
 	void move();
-	void updateRect();
 
 
 };

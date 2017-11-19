@@ -12,7 +12,9 @@
 #include <string>
 #include <iostream>
 #include <fstream>
-#define MAX_TICKS_PER_SECOND 2
+#define DEBUG
+#define MAX_TICKS_PER_SECOND 3
+#define	FPS 6
 #define NUM_TEXTURES 4
 
 using namespace std;

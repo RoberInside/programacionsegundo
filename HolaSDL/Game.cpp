@@ -5,6 +5,7 @@ Game::Game()
 {
 	exit = false;
 	currentLevel = 0;
+	nextDir = Direction::RIGHT;
 	initSDL();
 	initMedia();
 	initBoard(pathToLevels[currentLevel]);//TODO: poner una ruta por defecto, implementar un mapa
@@ -149,15 +150,35 @@ bool Game::initBoard(string path) {
 }
 
 void Game::run() {
-
-	Uint32 lastUpdate = SDL_GetTicks();
+	Uint32 lastFrame;
+	Uint32 lastUpdate  = lastFrame = 1;
+	Uint32 deltaUpdate, deltaFrame;
+#ifdef DEBUG
+	int cont = 0;
+#endif // DEBUG
 	while (!exit) {
-		Uint32 delta = lastUpdate - SDL_GetTicks();
-		if (delta > 1000/MAX_TICKS_PER_SECOND)
+#ifdef DEBUG
+		system("cls");
+#endif // DEBUG
+
+		deltaUpdate = SDL_GetTicks() - lastUpdate;
+		deltaFrame	= SDL_GetTicks() - lastFrame;
+
+		if (deltaUpdate >= 1000 / MAX_TICKS_PER_SECOND) {
 			update();
-		lastUpdate = SDL_GetTicks();
-		render();
+			lastUpdate = SDL_GetTicks();
+		}
+		if (deltaFrame >= 1000 / FPS) {
+			render();
+			lastFrame = SDL_GetTicks();
+		}
 		handleEvents();
+#ifdef DEBUG
+		cout<< "Frame "		<<  cont		<<	endl
+			<< "dUpdate: "	<<	deltaUpdate	<<	endl
+			<< "dFrame "	<<	deltaFrame	<<	endl;
+		cont++;
+#endif // DEBUG
 	}
 }
 void Game::update()
@@ -165,7 +186,7 @@ void Game::update()
 	pacman->update();
 	/*
 	for (auto g : ghosts) {
-	g->update();
+		g->update();
 	}
 	*/
 }
@@ -207,7 +228,20 @@ void Game::handleEvents()
 				break;
 			case SDLK_ESCAPE:
 				exit = true;
-				
+#ifdef DEBUG
+			case SDLK_PLUS:
+				if (currentLevel < 5) {
+					currentLevel++;
+					initBoard(pathToLevels[currentLevel]);
+				}
+				break;
+			case SDLK_MINUS:
+				if (currentLevel > 0) {
+					currentLevel--;
+					initBoard(pathToLevels[currentLevel]);
+				}
+				break;
+#endif // DEBUG
 			default:
 				break;
 			}
