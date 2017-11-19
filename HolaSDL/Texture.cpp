@@ -10,6 +10,13 @@ Texture::Texture(size_t const ROWS, size_t const COLS)
 
 }
 
+Texture::Texture()
+{
+	texture = nullptr;
+	_COLS = _ROWS = 1;
+	textHeight = textWidth = 0;
+}
+
 
 Texture::~Texture()
 {
@@ -25,7 +32,7 @@ bool Texture::load(SDL_Renderer* renderer, string filename) {
 	if (tmpSur == nullptr) { std::cout << "Unable to load image "<<filename<<" !" << endl; success = false; }
 	else {
 		texture = SDL_CreateTextureFromSurface(renderer, tmpSur);
-		texture->
+		SDL_QueryTexture(texture, NULL, NULL, &textWidth, &textHeight);
 		SDL_FreeSurface(tmpSur);
 		success = texture != nullptr;
 	}
@@ -45,10 +52,10 @@ void Texture::renderFrame(SDL_Renderer* renderer, const SDL_Rect& destRect,
 
 	SDL_Rect rect;
 		
-	rect.x = frameW * col;
-	rect.y = frameH * row;
-	rect.w = frameW;
-	rect.h = frameH;
+	rect.x = col * (textWidth  / _COLS);
+	rect.y = row * (textHeight / _ROWS);
+	rect.w = (textWidth/ _COLS);
+	rect.h = (textHeight / _ROWS);
 	SDL_RenderCopyEx(renderer, texture, &rect, &destRect, 0, 0, flip);
 	
 }

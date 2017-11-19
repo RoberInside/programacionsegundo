@@ -4,28 +4,25 @@
 
 GameMap::GameMap(Game* game, size_t rows, size_t cols) :pGame(game), _rows(rows), _cols(cols)
 {
-
+	//INIT BOARD/////////
 	board = new MapCell_t*[rows];
 
 	for (size_t i = 0; i < rows; i++)
 	{
 		board[i] = new MapCell_t[cols];
 	}
+	//FORMAT TILE
 	rect.x = rect.y = rect.w = rect.h = 0;
 	pGame->rectToTile(rect);
 
-	wallText = new Texture();
-	wallText->load(pGame->getRenderer(), pGame->getTextPath(Game::tWall));
+	//GET TEXTURES////////////
+	wallText	= pGame->getTexture(Game::Texture_t::tWall);
 
-	vitiminText = new Texture();
-	vitiminText->load(pGame->getRenderer(), pGame->getTextPath(Game::tVitamin));
+	vitiminText = pGame->getTexture(Game::Texture_t::tVitamin);
 
-	foodText = new Texture();
-	foodText->load(pGame->getRenderer(), pGame->getTextPath(Game::tPjes));
+	foodText	= pGame->getTexture(Game::Texture_t::tFood);
 
-	emptyText = new Texture();
-	emptyText->load(pGame->getRenderer(), pGame->getTextPath(Game::tPjes));
-
+	emptyText	= pGame->getTexture(Game::Texture_t::tPjes);
 }
 
 
@@ -63,12 +60,6 @@ bool GameMap::isEmpty(size_t x, size_t y)
 void GameMap::render()
 {
 
-	SDL_Rect destRect;
-	pGame->rectToTile(rect);
-	//pGame->rectToTile(destRect);
-
-	//emptyText->
-
 	for (size_t i = 0; i < _rows; i++)
 	{
 		for (size_t j = 0; j < _cols; j++)
@@ -81,13 +72,13 @@ void GameMap::render()
 				wallText->render(pGame->getRenderer(), &rect);
 				break;
 			case MapCell_t::Empty:
-				emptyText->renderFrame(pGame->getRenderer(), destRect, 3, 13, SDL_FLIP_NONE);
+				emptyText->renderFrame(pGame->getRenderer(), rect, 3, 13, SDL_FLIP_NONE);
 				break;
 			case MapCell_t::Vitamins:
 				vitiminText->render(pGame->getRenderer(), &rect);
 				break;
 			case MapCell_t::Food:
-				foodText->render(pGame->getRenderer(), &rect);
+				wallText->render(pGame->getRenderer(), &rect);
 				break;
 			default:
 				break;

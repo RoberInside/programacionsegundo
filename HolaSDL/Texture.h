@@ -7,14 +7,10 @@
 using namespace std;
 
 class Texture {
-private:
-	SDL_Texture* texture = nullptr;
-	SDL_Rect destRect; //rectangulo fuente y rectangulo destino
-
-	size_t textWidth, textHeight, _ROWS, _COLS;
 
 public:
 	Texture(size_t const ROWS, size_t const COLS);
+	Texture();
 	~Texture();
 
 	bool load(SDL_Renderer* renderer, string filename);
@@ -24,5 +20,11 @@ public:
 	void renderFrame(SDL_Renderer* renderer, const SDL_Rect& destRect,
 		int row, int col, SDL_RendererFlip flip = SDL_FLIP_NONE) const;
 
+private:
+	SDL_Texture* texture;
+	SDL_Rect destRect; //rectangulo fuente y rectangulo destino
+
+	int textWidth, textHeight;
+	size_t  _ROWS, _COLS;
 };
 #endif

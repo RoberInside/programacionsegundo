@@ -13,6 +13,7 @@
 #include <iostream>
 #include <fstream>
 #define MAX_TICKS_PER_SECOND 2
+#define NUM_TEXTURES 4
 
 using namespace std;
 
@@ -28,12 +29,16 @@ public:
 		tWall = 0,		
 		tVitamin = 1,
 		tPjes = 2,
+		tFood = 3
 		
 	};
 	enum class Direction{UP, DOWN, RIGHT, LEFT};
 	void rectToTile(SDL_Rect & rawRect);
 	SDL_Renderer* getRenderer() { return renderer; }
 	Direction getNextDir() { return nextDir; }
+	Texture* getTexture(Texture_t type) {
+		return textures[type]; 
+	};
 	bool canMoveTo(int x, int y);
 	string getTextPath(Texture_t text);
 private:
@@ -56,6 +61,7 @@ private:
 	bool exit = false;
 	vector <string> pathToLevels;
 	vector <string> texts_paths;
+	vector <Texture*> textures;
 	size_t currentLevel;
 	//Ghost* ghosts[4] = { nullptr, nullptr, nullptr, nullptr };
 	GameMap* gameMap;

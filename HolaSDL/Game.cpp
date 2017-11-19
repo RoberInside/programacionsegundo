@@ -74,17 +74,23 @@ bool Game::initMedia()
 		"..\\maps\\level04.dat",
 		"..\\maps\\level05.dat"
 	};
-	texts_paths.resize(9);
+	texts_paths.resize(NUM_TEXTURES);
 	texts_paths[tWall] = "..\\images\\wall.png";
 	texts_paths[tVitamin] = "..\\images\\vitamin.png";
-	texts_paths[tPjes] = "..\\images\\Characters1.png";
-	/*texts_paths[tPacman] = "..\\images\\pacman.png";
-	texts_paths[tGhost1] = "..\\images\\ghost1.png";
-	texts_paths[tGhost2] = "..\\images\\ghost2.png";
-	texts_paths[tGhost3] = "..\\images\\ghost3.png";
-	texts_paths[tGhost4] = "..\\images\\ghost4.png";
+	texts_paths[tPjes] = "..\\images\\characters1.png";
+	//texts_paths[tPjes] = "..\\images\\c.png";
 	texts_paths[tFood] = "..\\images\\food.png";
-	texts_paths[tEmpty] = "..\\images\\empty.png";*/
+	
+	textures.resize(NUM_TEXTURES);
+	textures[tWall] = new Texture();
+	textures[tWall]->load(getRenderer(), texts_paths[tWall]);
+	textures[tVitamin] = new Texture();
+	textures[tVitamin]->load(getRenderer(), texts_paths[tVitamin]);
+	textures[tPjes] = new Texture(4, 14);
+	textures[tPjes]->load(getRenderer(), texts_paths[tPjes]);
+	textures[tFood] = new Texture();
+	textures[tFood]->load(getRenderer(), texts_paths[tFood]);
+	//Init Textures
 	return true;
 }
 void Game::freeMedia()
