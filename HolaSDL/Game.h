@@ -63,7 +63,6 @@ private:
 	vector <string> texts_paths;
 	vector <Texture*> textures;
 	size_t currentLevel;
-	//Ghost* ghosts[4] = { nullptr, nullptr, nullptr, nullptr };
 	GameMap* gameMap;
 	Pacman* pacman;
 	Direction nextDir;

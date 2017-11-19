@@ -78,9 +78,9 @@ bool Game::initMedia()
 	texts_paths[tWall] = "..\\images\\wall.png";
 	texts_paths[tVitamin] = "..\\images\\vitamin.png";
 	texts_paths[tPjes] = "..\\images\\characters1.png";
-	//texts_paths[tPjes] = "..\\images\\c.png";
 	texts_paths[tFood] = "..\\images\\food.png";
 	
+	//Init Textures
 	textures.resize(NUM_TEXTURES);
 	textures[tWall] = new Texture();
 	textures[tWall]->load(getRenderer(), texts_paths[tWall]);
@@ -90,7 +90,6 @@ bool Game::initMedia()
 	textures[tPjes]->load(getRenderer(), texts_paths[tPjes]);
 	textures[tFood] = new Texture();
 	textures[tFood]->load(getRenderer(), texts_paths[tFood]);
-	//Init Textures
 	return true;
 }
 void Game::freeMedia()
@@ -136,7 +135,7 @@ bool Game::initBoard(string path) {
 			}
 			else if (buffer == '9') {
 				gameMap->setAt(MapCell_t::Empty, i, j);
-				pacman = new Pacman(this, i, j);
+				pacman = new Pacman(this, j, i);
 			}
 			else if (buffer == '5' || buffer == '6' || buffer == '7' || buffer == '8') {
 
@@ -151,11 +150,11 @@ bool Game::initBoard(string path) {
 
 void Game::run() {
 
-	Uint32 delta;
 	Uint32 lastUpdate = SDL_GetTicks();
 	while (!exit) {
-		delta = SDL_GetTicks() - lastUpdate;
-		//update();
+		Uint32 delta = lastUpdate - SDL_GetTicks();
+		if (delta > 1000/MAX_TICKS_PER_SECOND)
+			update();
 		lastUpdate = SDL_GetTicks();
 		render();
 		handleEvents();
@@ -175,7 +174,7 @@ void Game::render()
 	SDL_RenderClear(renderer);
 
 	gameMap->render();
-	//pacman->render();
+	pacman->render();
 	//for (Ghost* g : ghosts) g->update();
 
 	SDL_RenderPresent(renderer);
