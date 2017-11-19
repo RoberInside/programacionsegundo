@@ -1,9 +1,13 @@
 #include "Texture.h"
 #include <iostream>
 
-Texture::Texture()
+Texture::Texture(size_t const ROWS, size_t const COLS)
 {
 	texture = nullptr;
+	_ROWS = ROWS;
+	_COLS = COLS;
+	textHeight = textWidth = 0;
+
 }
 
 
@@ -21,6 +25,7 @@ bool Texture::load(SDL_Renderer* renderer, string filename) {
 	if (tmpSur == nullptr) { std::cout << "Unable to load image "<<filename<<" !" << endl; success = false; }
 	else {
 		texture = SDL_CreateTextureFromSurface(renderer, tmpSur);
+		texture->
 		SDL_FreeSurface(tmpSur);
 		success = texture != nullptr;
 	}
@@ -39,7 +44,7 @@ void Texture::renderFrame(SDL_Renderer* renderer, const SDL_Rect& destRect,
 	int row, int col, SDL_RendererFlip flip) const {
 
 	SDL_Rect rect;
-	
+		
 	rect.x = frameW * col;
 	rect.y = frameH * row;
 	rect.w = frameW;

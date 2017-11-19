@@ -25,15 +25,10 @@ public:
 	void run();
 
 	enum Texture_t {
-		tWall = 0,
-		tPacman = 1,
-		tGhost1 = 2,
-		tGhost2 = 3,
-		tGhost3 = 4,
-		tGhost4 = 5,
-		tFood = 6,
-		tVitamin = 7,
-		tEmpty = 8
+		tWall = 0,		
+		tVitamin = 1,
+		tPjes = 2,
+		
 	};
 	enum class Direction{UP, DOWN, RIGHT, LEFT};
 	void rectToTile(SDL_Rect & rawRect);

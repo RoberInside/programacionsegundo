@@ -11,10 +11,10 @@ private:
 	SDL_Texture* texture = nullptr;
 	SDL_Rect destRect; //rectangulo fuente y rectangulo destino
 
-	size_t frameW, frameH;
+	size_t textWidth, textHeight, _ROWS, _COLS;
 
 public:
-	Texture();
+	Texture(size_t const ROWS, size_t const COLS);
 	~Texture();
 
 	bool load(SDL_Renderer* renderer, string filename);

@@ -76,14 +76,15 @@ bool Game::initMedia()
 	};
 	texts_paths.resize(9);
 	texts_paths[tWall] = "..\\images\\wall.png";
-	texts_paths[tPacman] = "..\\images\\pacman.png";
+	texts_paths[tVitamin] = "..\\images\\vitamin.png";
+	texts_paths[tPjes] = "..\\images\\Characters1.png";
+	/*texts_paths[tPacman] = "..\\images\\pacman.png";
 	texts_paths[tGhost1] = "..\\images\\ghost1.png";
 	texts_paths[tGhost2] = "..\\images\\ghost2.png";
 	texts_paths[tGhost3] = "..\\images\\ghost3.png";
 	texts_paths[tGhost4] = "..\\images\\ghost4.png";
 	texts_paths[tFood] = "..\\images\\food.png";
-	texts_paths[tVitamin] = "..\\images\\vitamin.png";
-	texts_paths[tEmpty] = "..\\images\\empty.png";
+	texts_paths[tEmpty] = "..\\images\\empty.png";*/
 	return true;
 }
 void Game::freeMedia()

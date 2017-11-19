@@ -21,10 +21,10 @@ GameMap::GameMap(Game* game, size_t rows, size_t cols) :pGame(game), _rows(rows)
 	vitiminText->load(pGame->getRenderer(), pGame->getTextPath(Game::tVitamin));
 
 	foodText = new Texture();
-	foodText->load(pGame->getRenderer(), pGame->getTextPath(Game::tFood));
+	foodText->load(pGame->getRenderer(), pGame->getTextPath(Game::tPjes));
 
 	emptyText = new Texture();
-	emptyText->load(pGame->getRenderer(), pGame->getTextPath(Game::tEmpty));
+	emptyText->load(pGame->getRenderer(), pGame->getTextPath(Game::tPjes));
 
 }
 
@@ -63,13 +63,17 @@ bool GameMap::isEmpty(size_t x, size_t y)
 void GameMap::render()
 {
 
-	//SDL_Rect rect;
+	SDL_Rect destRect;
 	pGame->rectToTile(rect);
+	//pGame->rectToTile(destRect);
+
+	//emptyText->
+
 	for (size_t i = 0; i < _rows; i++)
 	{
 		for (size_t j = 0; j < _cols; j++)
 		{
-			rect.y = i * rect.h; //preguntar
+			rect.y = i * rect.h; 
 			rect.x = j * rect.w;
 			switch (board[i][j])
 			{
@@ -77,7 +81,7 @@ void GameMap::render()
 				wallText->render(pGame->getRenderer(), &rect);
 				break;
 			case MapCell_t::Empty:
-				emptyText->render(pGame->getRenderer(), &rect);
+				emptyText->renderFrame(pGame->getRenderer(), destRect, 3, 13, SDL_FLIP_NONE);
 				break;
 			case MapCell_t::Vitamins:
 				vitiminText->render(pGame->getRenderer(), &rect);
