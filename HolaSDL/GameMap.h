@@ -29,8 +29,8 @@ public:
 	size_t getCols() { return _cols; }
 
 	void render();
-private:
 	bool isInside(int x, int y);
+private:
 	size_t _cols, _rows;
 	MapCell_t** board;
 

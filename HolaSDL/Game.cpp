@@ -30,10 +30,32 @@ void Game::rectToTile(SDL_Rect & rawRect)
 	rawRect.w = tile.w;
 	rawRect.h = tile.h;
 }
-
-bool Game::canMoveTo(int x, int y)
+/*	Brief
+*	Returns true if pacman can move to the square in the params
+*	Also, if true, return the next avaliable position by params reference
+*/
+bool Game::canMoveTo(int& x, int& y)
 {
-	return gameMap->isEmpty(x, y);
+	int x_ = x, y_ = y;
+	if (x_ >= gameMap->getCols() && y < gameMap->getRows() && gameMap->isEmpty(0, y_)) {
+		x = 0;
+		return true;
+	}
+	if (x_ < 0 && y_ < gameMap->getRows() && gameMap->isEmpty(gameMap->getCols()-1, y_)) {
+		x = gameMap->getCols() - 1;
+		return true;
+	}
+	if (x_ < gameMap->getCols() && y >= gameMap->getRows() && gameMap->isEmpty(x_, 0)) {
+		y = 0;
+		return true;
+	}
+	if (x_ < gameMap->getCols() && y_ < 0 && 
+		gameMap->isEmpty(x_, gameMap->getRows()-1)) 
+	{
+		y = gameMap->getRows() - 1;
+		return true;
+	}
+	return gameMap->isEmpty(x_, y_);
 }
 
 string Game::getTextPath(Texture_t text)
@@ -109,15 +131,15 @@ bool Game::initBoard(string path) {
 
 	ifstream in(path);
 	char buffer;
-	size_t rows, cols, ghost_count = 0;
-	in >> rows >> cols;
-	setTileSize(rows, cols);
+	size_t ghost_count = 0;
+	in >> ROWS >> COLS;
+	setTileSize(ROWS, COLS);
 
-	gameMap = new GameMap(this, rows, cols); 
+	gameMap = new GameMap(this, ROWS, COLS);
 
-	for (size_t i = 0; i < rows; i++)
+	for (size_t i = 0; i < ROWS; i++)
 	{
-		for (size_t j = 0; j < cols; j++)
+		for (size_t j = 0; j < COLS; j++)
 		{
 			in >> buffer;
 
@@ -136,7 +158,7 @@ bool Game::initBoard(string path) {
 			}
 			else if (buffer == '9') {
 				gameMap->setAt(MapCell_t::Empty, i, j);
-				pacman = new Pacman(this, j, i);
+				pacman = new Pacman(this, i,j);
 			}
 			else if (buffer == '5' || buffer == '6' || buffer == '7' || buffer == '8') {
 
@@ -158,7 +180,7 @@ void Game::run() {
 #endif // DEBUG
 	while (!exit) {
 #ifdef DEBUG
-		system("cls");
+		//system("cls");
 #endif // DEBUG
 
 		deltaUpdate = SDL_GetTicks() - lastUpdate;
@@ -174,10 +196,10 @@ void Game::run() {
 		}
 		handleEvents();
 #ifdef DEBUG
-		cout<< "Frame "		<<  cont		<<	endl
+		/*cout<< "Frame "		<<  cont		<<	endl
 			<< "dUpdate: "	<<	deltaUpdate	<<	endl
 			<< "dFrame "	<<	deltaFrame	<<	endl;
-		cont++;
+		cont++;*/
 #endif // DEBUG
 	}
 }
@@ -232,12 +254,14 @@ void Game::handleEvents()
 			case SDLK_PLUS:
 				if (currentLevel < 5) {
 					currentLevel++;
+					delete gameMap;
 					initBoard(pathToLevels[currentLevel]);
 				}
 				break;
 			case SDLK_MINUS:
 				if (currentLevel > 0) {
 					currentLevel--;
+					delete gameMap;
 					initBoard(pathToLevels[currentLevel]);
 				}
 				break;

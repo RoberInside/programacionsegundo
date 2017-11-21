@@ -4,8 +4,8 @@
 
 Pacman::Pacman(Game* g, int x, int y):pGame(g)
 {
-	_x = x;
-	_y = y;
+	_x = y;
+	_y = x;
 	_row = 0;
 	_col = 10;
 	_rect.x = _rect.y = _rect.w = _rect.h = 0;
@@ -67,6 +67,11 @@ void Pacman::move()
 		_rect.x = _x * _rect.w;
 		_rect.y = _y * _rect.h;
 	}
+#ifdef DEBUG
+	system("cls");
+	cout << "Pacman Pos: " << _x <<", "<< _y << endl;
+#endif // DEBUG
+
 }
 
 

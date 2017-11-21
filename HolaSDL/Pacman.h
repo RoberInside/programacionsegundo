@@ -11,14 +11,15 @@ public:
 
 	void update();
 	void render();
+	void rewrap(char c);
 private:
+	void move();
 	int _x;
 	int _y;
 	int _col, _row;
 	Game* pGame;
 	SDL_Rect _rect;
 	Texture* texture;
-	void move();
 
 
 };

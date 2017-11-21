@@ -41,8 +41,9 @@ public:
 	Texture* getTexture(Texture_t type) {
 		return textures[type]; 
 	};
-	bool canMoveTo(int x, int y);
+	bool canMoveTo(int& x, int& y);
 	string getTextPath(Texture_t text);
+	size_t COLS, ROWS;
 private:
 	bool initSDL();
 	void closeSDL();
