@@ -11,6 +11,7 @@ public:
 
 	void update();
 	void render(int g);
+	
 private:
 
 	int _x;
@@ -18,7 +19,7 @@ private:
 	Game* pGame;
 	SDL_Rect _rect;
 	Texture* gText;
-	void move(int m);
+	void move();
 };
 
 #endif

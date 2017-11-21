@@ -32,7 +32,15 @@ void Game::rectToTile(SDL_Rect & rawRect)
 
 bool Game::canMoveTo(int x, int y)
 {
-	return gameMap->isEmpty(x, y);
+	return gameMap->isEmpty(x, y);// && !tiGhost(x, y);
+}
+
+bool Game::tiGhost(int x, int y)
+{
+
+
+
+	return true;
 }
 
 string Game::getTextPath(Texture_t text)
@@ -96,12 +104,12 @@ void Game::freeMedia()
 {
 	delete gameMap;
 	delete pacman;
-	/*
+	
 	for (size_t i = 0; i < 4; i++)
 	{
 	delete ghosts[i];
 	}
-	*/
+	
 }
 
 bool Game::initBoard(string path) {

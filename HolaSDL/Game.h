@@ -42,6 +42,7 @@ public:
 		return textures[type]; 
 	};
 	bool canMoveTo(int x, int y);
+	bool tiGhost(int x, int y);// there is(ti)
 	string getTextPath(Texture_t text);
 private:
 	bool initSDL();
