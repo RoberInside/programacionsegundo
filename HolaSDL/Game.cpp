@@ -1,7 +1,7 @@
 #include "Game.h"
 
 
-Game::Game():exit(false), currentLevel(0), lives(3)
+Game::Game():exit(false), currentLevel(0), lives(3), score(0), foodPoints(100), vitaminPoints(300)
 {
 	initSDL();
 	initMedia();
@@ -111,7 +111,7 @@ void Game::freeMedia()
 }
 
 bool Game::initBoard(string path) {
-
+	reset();
 	ifstream in(path);
 	char buffer;
 	size_t rows, cols, ghost_count = 0;
@@ -182,11 +182,7 @@ void Game::run() {
 #ifdef DEBUG
 	int cont = 0;
 #endif // DEBUG
-	while (!exit) {
-#ifdef DEBUG
-		system("cls");
-#endif // DEBUG
-
+	while (!exit) {//MAINLOOP////////////////////////////////
 		deltaUpdate = SDL_GetTicks() - lastUpdate;
 		deltaFrame = SDL_GetTicks() - lastFrame;
 
@@ -200,13 +196,15 @@ void Game::run() {
 		}
 		handleEvents();
 #ifdef DEBUG
-		cout << "Frame " << cont << endl
-			<< "dUpdate: " << deltaUpdate << endl
-			<< "dFrame " << deltaFrame << endl
-			<< "Lives: " << lives << endl;
-		cont++;
+		//Debug variables in printed out console
+		showDebugInfo();
 #endif // DEBUG
-	}
+	}//MAINLOOP/////////////////////////////////////////////
+	//Game ended
+#ifndef DEBUG//Just to not show every time we debug
+	string finalInfo = "Your score is: " + to_string(score);
+	SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_INFORMATION, "GAME OVER", finalInfo.c_str(), window);
+#endif // !DEBUG
 }
 void Game::update()
 {
@@ -216,7 +214,7 @@ void Game::update()
 	g->update();
 	}
 	checkCollisions();
-	
+
 }
 void Game::render()
 {
@@ -224,7 +222,9 @@ void Game::render()
 	
 	gameMap->render();
 	pacman->render();
-	for (int i = 0; i < 4; i++) ghosts[i]->render();
+	for (int i = 0; i < 4; i++) {
+		ghosts[i]->render();
+	}
 	
 	SDL_RenderPresent(renderer);
 }
@@ -278,12 +278,29 @@ void Game::handleEvents()
 }
 
 void Game::checkCollisions() {
+	//Collisions with Ghosts
 	for each (Ghost* g in ghosts)
 	{
-		if (pacman->getX() == g->getX() &&
-			pacman->getY() == g->getY())
-			killPacman();
+		if (g->isAlive()) {
+			if (pacman->getX() == g->getX() &&
+				pacman->getY() == g->getY())
+				if (pacman->isSuperMode())
+					g->kill();
+				else
+					killPacman();
+		}
 	}
+	//Collisions with food and vitamins
+	if (gameMap->isAt(MapCell_t::Food, pacman->getX(), pacman->getY())) {
+		score += foodPoints;
+		gameMap->setAt(MapCell_t::Empty, pacman->getX(), pacman->getY());
+	}
+	else if (gameMap->isAt(MapCell_t::Vitamins, pacman->getX(), pacman->getY())) {
+		score += vitaminPoints;
+		pacman->setSuperMode();
+		gameMap->setAt(MapCell_t::Empty, pacman->getX(), pacman->getY());
+	}
+
 }
 
 void Game::killPacman()
@@ -292,3 +309,19 @@ void Game::killPacman()
 	lives--;
 	exit = lives <= 0;
 }
+
+void Game::reset()
+{
+	lives = 3;
+	score = 0;
+}
+
+#ifdef DEBUG
+void Game::showDebugInfo()
+{
+	system("cls");
+	cout
+		<< "Pacman position: " << pacman->getX() << ", " << pacman->getY() << endl
+		<< "Score: " << score << endl;
+}
+#endif // DEBUG

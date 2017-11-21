@@ -14,7 +14,8 @@ Pacman::Pacman(Game* g, int x, int y):pGame(g)
 	_rect.x = _x * _rect.w;
 	_rect.y = _y * _rect.h;
 	pacText = pGame->getTexture(Game::Texture_t::tPjes);
-	
+
+	superMode = false;
 }
 
 Pacman::~Pacman()

@@ -14,6 +14,7 @@ Ghost::Ghost(Game* g, int x, int y, int color):pGame(g)
 	_rect.y = _y * _rect.h;
 	gText = pGame->getTexture(Game::Texture_t::tPjes);
 	
+	alive = true;
 }
 
 
@@ -24,25 +25,30 @@ Ghost::~Ghost()
 
 void Ghost::update()
 {
-	
-	move();
+	if (alive) {
+		move();
+	}
 }
 
 void Ghost::render()
 {
-	
-	SDL_Rect rect;
-	rect.x = rect.y = rect.w = rect.h = 0;
-	pGame->rectToTile(rect);
-	rect.x = _x * rect.w;
-	rect.y = _y * rect.h;
+	if (alive) {
+		SDL_Rect rect;
+		rect.x = rect.y = rect.w = rect.h = 0;
+		pGame->rectToTile(rect);
+		rect.x = _x * rect.w;
+		rect.y = _y * rect.h;
 
-	if (ss_col % 2 == 0) ss_col++;
-	else ss_col--;
+		if (ss_col % 2 == 0) ss_col++;
+		else ss_col--;
 
-	gText->renderFrame(pGame->getRenderer(), rect, ss_row, ss_col , SDL_FLIP_NONE);
-	
-	
+		gText->renderFrame(pGame->getRenderer(), rect, ss_row, ss_col, SDL_FLIP_NONE);
+	}
+}
+
+void Ghost::kill()//Provisional
+{
+	alive = false;
 }
 
 void Ghost::move()

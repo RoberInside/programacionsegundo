@@ -58,6 +58,11 @@ private:
 	void handleEvents();
 	void checkCollisions();
 	void killPacman();
+	void reset();
+#ifdef DEBUG
+	void showDebugInfo();
+#endif // DEBUG
+
 private:
 	SDL_Window* window = nullptr;
 	SDL_Renderer* renderer = nullptr;
@@ -75,6 +80,9 @@ private:
 	SDL_Rect tile;
 	Ghost* ghosts[4];
 	int lives;
+	int score;
+	const int foodPoints;
+	const int vitaminPoints;
 };
 #endif // !_H_GAME_H_
 

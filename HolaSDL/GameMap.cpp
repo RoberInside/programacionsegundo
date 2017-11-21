@@ -1,7 +1,6 @@
 #include "GameMap.h"
 #include "Game.h"
 
-
 GameMap::GameMap(Game* game, size_t rows, size_t cols) :pGame(game), _rows(rows), _cols(cols)
 {
 	//INIT BOARD/////////
@@ -11,6 +10,9 @@ GameMap::GameMap(Game* game, size_t rows, size_t cols) :pGame(game), _rows(rows)
 	{
 		board[i] = new MapCell_t[cols];
 	}
+	//INIT VISIT REGISTER
+	visited = new bool[rows*cols];
+
 	//FORMAT TILE
 	rect.x = rect.y = rect.w = rect.h = 0;
 	pGame->rectToTile(rect);
@@ -47,12 +49,12 @@ void GameMap::setAt(MapCell_t type, size_t x, size_t y)
 		board[x][y] = type;
 }
 
-bool GameMap::isAt(MapCell_t type, size_t x, size_t y)
+bool GameMap::isAt(MapCell_t type, size_t y, size_t x)const
 {
 	return (isInside(x, y) && board[x][y] == type);
 }
 
-bool GameMap::isEmpty(size_t x, size_t y)
+bool GameMap::isEmpty(size_t x, size_t y)const
 {
 	return (isInside(x, y) && (board[x][y] == MapCell_t::Empty || 
 		board[x][y] == MapCell_t::Vitamins|| board[x][y] == MapCell_t::Food));
@@ -89,7 +91,7 @@ void GameMap::render()
 	}
 }
 
-bool GameMap::isInside(int x, int y)// estaba mal planteado
+bool GameMap::isInside(int x, int y)const// estaba mal planteado
 {
 	return (x >= 0 && y >= 0 && y <(int)_cols && x < (int)_rows);
 }

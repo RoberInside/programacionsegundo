@@ -15,7 +15,11 @@ public:
 	int getX() const { return _x; }
 	int getY() const { return _y; }
 	
+	void kill();
+
+	bool isAlive() { return alive; }
 private:
+	bool alive;
 	int ss_col, ss_row;
 	int _x;
 	int _y;
