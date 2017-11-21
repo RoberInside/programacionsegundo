@@ -12,8 +12,8 @@ public:
 	void update();
 	void render();
 
-	int getX() const { return _x; }
-	int getY() const { return _y; }
+	int getX() const { return _y; }
+	int getY() const { return _x; }
 	
 	void kill();
 
