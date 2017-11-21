@@ -11,6 +11,9 @@ public:
 
 	void update();
 	void render();
+
+	int getX() const { return _x; }
+	int getY() const { return _y; }
 private:
 	int ss_col, ss_row;
 	int _x;

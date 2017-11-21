@@ -56,6 +56,8 @@ private:
 	void render();
 	void update();
 	void handleEvents();
+	void checkCollisions();
+	void killPacman();
 private:
 	SDL_Window* window = nullptr;
 	SDL_Renderer* renderer = nullptr;
@@ -72,6 +74,7 @@ private:
 	SDL_Event e;
 	SDL_Rect tile;
 	Ghost* ghosts[4];
+	int lives;
 };
 #endif // !_H_GAME_H_
 

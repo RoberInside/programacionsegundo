@@ -1,10 +1,8 @@
 #include "Game.h"
 
 
-Game::Game()
+Game::Game():exit(false), currentLevel(0), lives(3)
 {
-	exit = false;
-	currentLevel = 1;
 	initSDL();
 	initMedia();
 	initBoard(pathToLevels[currentLevel]);//TODO: poner una ruta por defecto, implementar un mapa
@@ -204,7 +202,8 @@ void Game::run() {
 #ifdef DEBUG
 		cout << "Frame " << cont << endl
 			<< "dUpdate: " << deltaUpdate << endl
-			<< "dFrame " << deltaFrame << endl;
+			<< "dFrame " << deltaFrame << endl
+			<< "Lives: " << lives << endl;
 		cont++;
 #endif // DEBUG
 	}
@@ -216,6 +215,7 @@ void Game::update()
 	for (auto g : ghosts) {
 	g->update();
 	}
+	checkCollisions();
 	
 }
 void Game::render()
@@ -275,4 +275,20 @@ void Game::handleEvents()
 			}
 		}
 	}
+}
+
+void Game::checkCollisions() {
+	for each (Ghost* g in ghosts)
+	{
+		if (pacman->getX() == g->getX() &&
+			pacman->getY() == g->getY())
+			killPacman();
+	}
+}
+
+void Game::killPacman()
+{
+	//Provisional!!
+	lives--;
+	exit = lives <= 0;
 }
