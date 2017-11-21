@@ -32,7 +32,7 @@ void Game::rectToTile(SDL_Rect & rawRect)
 
 bool Game::canMoveTo(int x, int y)
 {
-	return gameMap->isEmpty(x, y) && ;
+	return gameMap->isEmpty(x, y);
 }
 
 string Game::getTextPath(Texture_t text)
