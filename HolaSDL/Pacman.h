@@ -12,6 +12,7 @@ public:
 	void update();
 	void render();
 private:
+	int ss_col, ss_row;
 	int _x;
 	int _y;
 	Game* pGame;

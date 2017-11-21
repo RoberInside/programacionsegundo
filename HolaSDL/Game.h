@@ -34,7 +34,7 @@ public:
 		tFood = 3
 		
 	};
-	enum class Direction{UP, DOWN, RIGHT, LEFT};
+	enum class Direction{UP = 3, DOWN = 1, RIGHT = 0, LEFT = 2};
 	void rectToTile(SDL_Rect & rawRect);
 	SDL_Renderer* getRenderer() { return renderer; }
 	Direction getNextDir() { return nextDir; }

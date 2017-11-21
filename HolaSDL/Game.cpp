@@ -146,22 +146,22 @@ bool Game::initBoard(string path) {
 			}
 			else if (buffer == '5') {
 				gameMap->setAt(MapCell_t::Empty, i, j);
-				ghosts[0] = new Ghost(this, i, j);
+				ghosts[0] = new Ghost(this, i, j, 0);
 				
 			}
 			else if (buffer == '6') {
 				gameMap->setAt(MapCell_t::Empty, i, j);
-				ghosts[1] = new Ghost(this, i, j);
+				ghosts[1] = new Ghost(this, i, j, 1);
 
 			}
 			else if (buffer == '7') {
 				gameMap->setAt(MapCell_t::Empty, i, j);
-				ghosts[2] = new Ghost(this, i, j);
+				ghosts[2] = new Ghost(this, i, j, 2);
 
 			}
 			else if (buffer == '8') {
 				gameMap->setAt(MapCell_t::Empty, i, j);
-				ghosts[3] = new Ghost(this, i, j);
+				ghosts[3] = new Ghost(this, i, j, 3);
 
 			}		
 			else if (buffer == '9') {
@@ -224,7 +224,7 @@ void Game::render()
 	
 	gameMap->render();
 	pacman->render();
-	for (int i = 0; i < 4; i++) ghosts[i]->render(i);
+	for (int i = 0; i < 4; i++) ghosts[i]->render();
 	
 	SDL_RenderPresent(renderer);
 }

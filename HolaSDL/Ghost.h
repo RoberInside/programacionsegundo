@@ -6,14 +6,14 @@ class Game;
 class Ghost
 {
 public:
-	Ghost(Game* g, int x, int y);
+	Ghost(Game* g, int x, int y, int color);
 	~Ghost();
 
 	void update();
-	void render(int g);
+	void render();
 	
 private:
-
+	int ss_col, ss_row;
 	int _x;
 	int _y;
 	Game* pGame;

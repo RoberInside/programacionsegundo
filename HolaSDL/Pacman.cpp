@@ -6,7 +6,9 @@ Pacman::Pacman(Game* g, int x, int y):pGame(g)
 {
 	_x = y;
 	_y = x;
-	
+	ss_col = 10;
+	ss_row = 0;
+
 	_rect.x = _rect.y = _rect.w = _rect.h = 0;
 	pGame->rectToTile(_rect);
 	_rect.x = _x * _rect.w;
@@ -22,6 +24,7 @@ Pacman::~Pacman()
 
 void Pacman::update()
 {
+	
 	move();
 }
 
@@ -32,13 +35,18 @@ void Pacman::render()
 	pGame->rectToTile(rect);
 	rect.x = _x * rect.w;
 	rect.y = _y * rect.h;
-	pacText->renderFrame(pGame->getRenderer(), rect, 0, 11, SDL_FLIP_NONE);
+
+	if (ss_col % 2 == 0)ss_col++;
+	else ss_col--;
+
+	pacText->renderFrame(pGame->getRenderer(), rect, ss_row, ss_col, SDL_FLIP_NONE);
 }
 
 void Pacman::move()
 {
 	int nx = _x;
 	int ny = _y;
+	
 	switch (pGame->getNextDir())
 	{
 	case Game::Direction::UP:
@@ -62,6 +70,8 @@ void Pacman::move()
 
 		_rect.x = _x * _rect.w;
 		_rect.y = _y * _rect.h;
+		
+		ss_row = (int)pGame->getNextDir();
 
 	}
 }
