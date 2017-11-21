@@ -32,7 +32,7 @@ void Game::rectToTile(SDL_Rect & rawRect)
 
 bool Game::canMoveTo(int x, int y)
 {
-	return gameMap->isEmpty(x, y);
+	return gameMap->isEmpty(x, y) && ;
 }
 
 string Game::getTextPath(Texture_t text)
@@ -131,9 +131,9 @@ bool Game::initBoard(string path) {
 			}
 			else if (buffer == '3') {
 				gameMap->setAt(MapCell_t::Vitamins, i, j);
-				//no esta asignado el 4 para la puerta del recinto de los fantasmas
+				
 			}
-			else if (buffer == '4') {
+			else if (buffer == '4') { //si no ponia empty no salian del cuadrado
 				gameMap->setAt(MapCell_t::Empty, i, j);
 			}
 			else if (buffer == '5') {
@@ -170,14 +170,35 @@ bool Game::initBoard(string path) {
 
 void Game::run() {
 
-	Uint32 delta;
-	Uint32 lastUpdate = SDL_GetTicks();
+	Uint32 lastFrame;
+	Uint32 lastUpdate = lastFrame = 1;
+	Uint32 deltaUpdate, deltaFrame;
+#ifdef DEBUG
+	int cont = 0;
+#endif // DEBUG
 	while (!exit) {
-		delta = SDL_GetTicks() - lastUpdate;
-		update();
-		lastUpdate = SDL_GetTicks();
-		render();
+#ifdef DEBUG
+		system("cls");
+#endif // DEBUG
+
+		deltaUpdate = SDL_GetTicks() - lastUpdate;
+		deltaFrame = SDL_GetTicks() - lastFrame;
+
+		if (deltaUpdate >= 1000 / MAX_TICKS_PER_SECOND) {
+			update();
+			lastUpdate = SDL_GetTicks();
+		}
+		if (deltaFrame >= 1000 / FPS) {
+			render();
+			lastFrame = SDL_GetTicks();
+		}
 		handleEvents();
+#ifdef DEBUG
+		cout << "Frame " << cont << endl
+			<< "dUpdate: " << deltaUpdate << endl
+			<< "dFrame " << deltaFrame << endl;
+		cont++;
+#endif // DEBUG
 	}
 }
 void Game::update()
@@ -227,7 +248,20 @@ void Game::handleEvents()
 				break;
 			case SDLK_ESCAPE:
 				exit = true;
-				
+#ifdef DEBUG
+			case SDLK_PLUS:
+				if (currentLevel < 5) {
+					currentLevel++;
+					initBoard(pathToLevels[currentLevel]);
+				}
+				break;
+			case SDLK_MINUS:
+				if (currentLevel > 0) {
+					currentLevel--;
+					initBoard(pathToLevels[currentLevel]);
+				}
+				break;
+#endif // DEBUG
 			default:
 				break;
 			}
