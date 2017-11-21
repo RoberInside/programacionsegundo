@@ -16,9 +16,9 @@ private:
 	int _y;
 	Game* pGame;
 	SDL_Rect _rect;
-	Texture* texture;
+	Texture* pacText;
 	void move();
-	void updateRect();
+	
 
 
 };

@@ -63,13 +63,12 @@ private:
 	vector <string> texts_paths;
 	vector <Texture*> textures;
 	size_t currentLevel;
-	//Ghost* ghosts[4] = { nullptr, nullptr, nullptr, nullptr };
 	GameMap* gameMap;
 	Pacman* pacman;
 	Direction nextDir;
 	SDL_Event e;
 	SDL_Rect tile;
-
+	Ghost* ghosts[4];
 };
 #endif // !_H_GAME_H_
 

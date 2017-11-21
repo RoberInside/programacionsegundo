@@ -4,20 +4,20 @@
 
 Pacman::Pacman(Game* g, int x, int y):pGame(g)
 {
-	_x = x;
-	_y = y;
+	_x = y;
+	_y = x;
 	
 	_rect.x = _rect.y = _rect.w = _rect.h = 0;
-	g->rectToTile(_rect);
+	pGame->rectToTile(_rect);
 	_rect.x = _x * _rect.w;
 	_rect.y = _y * _rect.h;
-	texture = new Texture();
-	texture->load(pGame->getRenderer() , "..\\images\\pacman.png");
+	pacText = pGame->getTexture(Game::Texture_t::tPjes);
+	
 }
 
 Pacman::~Pacman()
 {
-	delete texture;
+	delete pacText;
 }
 
 void Pacman::update()
@@ -32,7 +32,7 @@ void Pacman::render()
 	pGame->rectToTile(rect);
 	rect.x = _x * rect.w;
 	rect.y = _y * rect.h;
-	texture->render(pGame->getRenderer(), &rect);
+	pacText->renderFrame(pGame->getRenderer(), rect, 0, 11, SDL_FLIP_NONE);
 }
 
 void Pacman::move()
@@ -51,22 +51,17 @@ void Pacman::move()
 		nx++;
 		break;
 	case Game::Direction::LEFT:
-		ny--;
+		nx--;
 		break;
 	default:
 		break;
 	}
-	if (pGame->canMoveTo(nx, ny)) {
+	if (pGame->canMoveTo(ny, nx)) {
 		_x = nx;
 		_y = ny;
-		updateRect();
+
+		_rect.x = _x * _rect.w;
+		_rect.y = _y * _rect.h;
+
 	}
 }
-
-void Pacman::updateRect()
-{
-	_rect.x = _x * _rect.w;
-	_rect.y = _y * _rect.h;
-}
-
-

@@ -4,7 +4,7 @@
 Game::Game()
 {
 	exit = false;
-	currentLevel = 0;
+	currentLevel = 1;
 	initSDL();
 	initMedia();
 	initBoard(pathToLevels[currentLevel]);//TODO: poner una ruta por defecto, implementar un mapa
@@ -78,7 +78,6 @@ bool Game::initMedia()
 	texts_paths[tWall] = "..\\images\\wall.png";
 	texts_paths[tVitamin] = "..\\images\\vitamin.png";
 	texts_paths[tPjes] = "..\\images\\characters1.png";
-	//texts_paths[tPjes] = "..\\images\\c.png";
 	texts_paths[tFood] = "..\\images\\food.png";
 	
 	textures.resize(NUM_TEXTURES);
@@ -134,18 +133,38 @@ bool Game::initBoard(string path) {
 				gameMap->setAt(MapCell_t::Vitamins, i, j);
 				//no esta asignado el 4 para la puerta del recinto de los fantasmas
 			}
+			else if (buffer == '4') {
+				gameMap->setAt(MapCell_t::Empty, i, j);
+			}
+			else if (buffer == '5') {
+				gameMap->setAt(MapCell_t::Empty, i, j);
+				ghosts[0] = new Ghost(this, i, j);
+				
+			}
+			else if (buffer == '6') {
+				gameMap->setAt(MapCell_t::Empty, i, j);
+				ghosts[1] = new Ghost(this, i, j);
+
+			}
+			else if (buffer == '7') {
+				gameMap->setAt(MapCell_t::Empty, i, j);
+				ghosts[2] = new Ghost(this, i, j);
+
+			}
+			else if (buffer == '8') {
+				gameMap->setAt(MapCell_t::Empty, i, j);
+				ghosts[3] = new Ghost(this, i, j);
+
+			}		
 			else if (buffer == '9') {
 				gameMap->setAt(MapCell_t::Empty, i, j);
 				pacman = new Pacman(this, i, j);
 			}
-			else if (buffer == '5' || buffer == '6' || buffer == '7' || buffer == '8') {
-
-				gameMap->setAt(MapCell_t::Empty, i, j);
-				//ghosts[ghost_count];
-				ghost_count++;
+				
+				
 			}
 		}
-	}
+	
 	return true;
 }
 
@@ -155,7 +174,7 @@ void Game::run() {
 	Uint32 lastUpdate = SDL_GetTicks();
 	while (!exit) {
 		delta = SDL_GetTicks() - lastUpdate;
-		//update();
+		update();
 		lastUpdate = SDL_GetTicks();
 		render();
 		handleEvents();
@@ -164,20 +183,20 @@ void Game::run() {
 void Game::update()
 {
 	pacman->update();
-	/*
+	
 	for (auto g : ghosts) {
 	g->update();
 	}
-	*/
+	
 }
 void Game::render()
 {
 	SDL_RenderClear(renderer);
-
+	
 	gameMap->render();
-	//pacman->render();
-	//for (Ghost* g : ghosts) g->update();
-
+	pacman->render();
+	for (int i = 0; i < 4; i++) ghosts[i]->render(i);
+	
 	SDL_RenderPresent(renderer);
 }
 void Game::handleEvents()
