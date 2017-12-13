@@ -57,7 +57,7 @@ bool GameMap::isAt(MapCell_t type, size_t y, size_t x)const
 bool GameMap::isEmpty(size_t x, size_t y)const
 {
 	return (isInside(x, y) && (board[x][y] == MapCell_t::Empty || 
-		board[x][y] == MapCell_t::Vitamins|| board[x][y] == MapCell_t::Food));
+		board[x][y] != MapCell_t::Wall));
 }
 
 void GameMap::render()

@@ -291,15 +291,18 @@ void Game::checkCollisions() {
 		}
 	}
 	//Collisions with food and vitamins
-	if (gameMap->isAt(MapCell_t::Food, pacman->getX(), pacman->getY())) {
-		score += foodPoints;
+	if (!gameMap->isAt(MapCell_t::Wall, pacman->getX(), pacman->getY()) || !gameMap->isAt(MapCell_t::Empty, pacman->getX(), pacman->getY())) {
+		// faltaba excluir que no fuesen empty
+		if (gameMap->isAt(MapCell_t::Food, pacman->getX(), pacman->getY())) {
+			score += foodPoints;
+		}
+		else if (gameMap->isAt(MapCell_t::Vitamins, pacman->getX(), pacman->getY())) {
+			score += vitaminPoints;
+			pacman->setSuperMode();
+		}
 		gameMap->setAt(MapCell_t::Empty, pacman->getX(), pacman->getY());
 	}
-	else if (gameMap->isAt(MapCell_t::Vitamins, pacman->getX(), pacman->getY())) {
-		score += vitaminPoints;
-		pacman->setSuperMode();
-		gameMap->setAt(MapCell_t::Empty, pacman->getX(), pacman->getY());
-	}
+	
 
 }
 
