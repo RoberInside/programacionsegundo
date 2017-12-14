@@ -16,6 +16,7 @@
 #define MAX_TICKS_PER_SECOND 3
 #define	FPS 6
 #define NUM_TEXTURES 4
+#define SUPERMODE_TIME 5*1000
 
 using namespace std;
 
@@ -32,18 +33,17 @@ public:
 		tVitamin = 1,
 		tPjes = 2,
 		tFood = 3
-		
 	};
-	enum class Direction{UP = 3, DOWN = 1, RIGHT = 0, LEFT = 2};
+
+	enum class Direction{ UP = 3, DOWN = 1, RIGHT = 0, LEFT = 2 };
 	void rectToTile(SDL_Rect & rawRect);
-	SDL_Renderer* getRenderer() { return renderer; }
-	Direction getNextDir() { return nextDir; }
-	Texture* getTexture(Texture_t type) {
-		return textures[type]; 
-	};
-	bool canMoveTo(int x, int y);
 	bool tiGhost(int x, int y);// there is(ti)
 	string getTextPath(Texture_t text);
+	bool canMoveTo(int x, int y);
+	inline SDL_Renderer* getRenderer() { return renderer; }
+	inline Direction getNextDir() { return nextDir; }
+	inline Texture* getTexture(Texture_t type) { return textures[type]; };
+	inline bool isSuperMode() { return supermode; };
 private:
 	bool initSDL();
 	void closeSDL();
@@ -69,6 +69,8 @@ private:
 	size_t winWidth = 800;
 	size_t winHeight = 600;
 	bool exit = false;
+	bool supermode;
+	int superModeTime;
 	vector <string> pathToLevels;
 	vector <string> texts_paths;
 	vector <Texture*> textures;

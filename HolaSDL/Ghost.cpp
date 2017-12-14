@@ -5,6 +5,7 @@ Ghost::Ghost(Game* g, int x, int y, int color):pGame(g)
 {
 	_x = y;
 	_y = x;
+	this->color = color;
 	ss_col = color * 2;
 	ss_row = 0;
 
@@ -25,6 +26,7 @@ Ghost::~Ghost()
 
 void Ghost::update()
 {
+	pGame->isSuperMode() ? ss_col = 7 * 2 : color * 2;
 	if (alive) {
 		move();
 	}
@@ -32,18 +34,25 @@ void Ghost::update()
 
 void Ghost::render()
 {
-	if (alive) {
-		SDL_Rect rect;
-		rect.x = rect.y = rect.w = rect.h = 0;
-		pGame->rectToTile(rect);
-		rect.x = _x * rect.w;
-		rect.y = _y * rect.h;
+	SDL_Rect rect;
 
-		if (ss_col % 2 == 0) ss_col++;
-		else ss_col--;
-
-		gText->renderFrame(pGame->getRenderer(), rect, ss_row, ss_col, SDL_FLIP_NONE);
+	if (supermode) {
+		if (alive) {
+			ss_row % 2 ? ss_row++ : ss_row--;
+		}
+		else {
+			ss_row = 2;
+		}
 	}
+
+	rect.x = rect.y = rect.w = rect.h = 0;
+	pGame->rectToTile(rect);
+	rect.x = _x * rect.w;
+	rect.y = _y * rect.h;
+
+	ss_col % 2 ? ss_col++ : ss_col--;
+
+	gText->renderFrame(pGame->getRenderer(), rect, ss_row, ss_col, SDL_FLIP_NONE);
 }
 
 void Ghost::kill()//Provisional

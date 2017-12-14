@@ -15,7 +15,7 @@ Pacman::Pacman(Game* g, int x, int y):pGame(g)
 	_rect.y = _y * _rect.h;
 	pacText = pGame->getTexture(Game::Texture_t::tPjes);
 
-	superMode = false;
+	supermodeTicks = 0;
 }
 
 Pacman::~Pacman()
@@ -25,7 +25,6 @@ Pacman::~Pacman()
 
 void Pacman::update()
 {
-	
 	move();
 }
 
@@ -37,7 +36,7 @@ void Pacman::render()
 	rect.x = _x * rect.w;
 	rect.y = _y * rect.h;
 
-	if (ss_col % 2 == 0)ss_col++;
+	if (ss_col % 2 == 0) ss_col++;
 	else ss_col--;
 
 	pacText->renderFrame(pGame->getRenderer(), rect, ss_row, ss_col, SDL_FLIP_NONE);

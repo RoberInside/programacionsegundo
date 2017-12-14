@@ -1,7 +1,7 @@
 #include "Game.h"
 
 
-Game::Game():exit(false), currentLevel(0), lives(3), score(0), foodPoints(100), vitaminPoints(300)
+Game::Game():exit(false), currentLevel(0), lives(3), score(0), foodPoints(100), vitaminPoints(300), superModeTime(SUPERMODE_TIME)
 {
 	initSDL();
 	initMedia();
@@ -35,9 +35,6 @@ bool Game::canMoveTo(int x, int y)
 
 bool Game::tiGhost(int x, int y)
 {
-
-
-
 	return true;
 }
 
@@ -177,24 +174,31 @@ bool Game::initBoard(string path) {
 void Game::run() {
 
 	Uint32 lastFrame;
-	Uint32 lastUpdate = lastFrame = 1;
-	Uint32 deltaUpdate, deltaFrame;
+	Uint32 lastTime;
+	Uint32 lastUpdate = lastTime = lastFrame = 1;
+	Uint32 deltaUpdate, deltaFrame, deltaTime;
 #ifdef DEBUG
 	int cont = 0;
 #endif // DEBUG
 	while (!exit) {//MAINLOOP////////////////////////////////
 		deltaUpdate = SDL_GetTicks() - lastUpdate;
-		deltaFrame = SDL_GetTicks() - lastFrame;
+		deltaFrame	= SDL_GetTicks() - lastFrame;
+		deltaTime	= SDL_GetTicks() - lastTime;
 
 		if (deltaUpdate >= 1000 / MAX_TICKS_PER_SECOND) {
 			update();
 			lastUpdate = SDL_GetTicks();
+		}
+		if (supermode) {
+			superModeTime -= deltaTime;
+			supermode = !(superModeTime <= 0);
 		}
 		if (deltaFrame >= 1000 / FPS) {
 			render();
 			lastFrame = SDL_GetTicks();
 		}
 		handleEvents();
+		lastTime = SDL_GetTicks();
 #ifdef DEBUG
 		//Debug variables in printed out console
 		showDebugInfo();
@@ -211,7 +215,7 @@ void Game::update()
 	pacman->update();
 	
 	for (auto g : ghosts) {
-	g->update();
+		g->update();
 	}
 	checkCollisions();
 
@@ -284,7 +288,7 @@ void Game::checkCollisions() {
 		if (g->isAlive()) {
 			if (pacman->getX() == g->getX() &&
 				pacman->getY() == g->getY())
-				if (pacman->isSuperMode())
+				if (supermode)
 					g->kill();
 				else
 					killPacman();
@@ -298,7 +302,7 @@ void Game::checkCollisions() {
 		}
 		else if (gameMap->isAt(MapCell_t::Vitamins, pacman->getX(), pacman->getY())) {
 			score += vitaminPoints;
-			pacman->setSuperMode();
+			supermode = true;
 		}
 		gameMap->setAt(MapCell_t::Empty, pacman->getX(), pacman->getY());
 	}

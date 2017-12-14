@@ -14,15 +14,12 @@ public:
 	void update();
 	void render();
 
-	int getX() const { return _y; }
-	int getY() const { return _x; }
+	inline int getX() const { return _y; }
+	inline int getY() const { return _x; }
 
-	void setSuperMode() { superMode = true; };
-	bool isSuperMode() { return superMode; }
 private:
 	int ss_col, ss_row;
 
-	bool superMode;
 	int _x;
 	int _y;
 	Game* pGame;

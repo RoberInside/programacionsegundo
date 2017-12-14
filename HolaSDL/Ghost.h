@@ -20,6 +20,8 @@ public:
 	bool isAlive() { return alive; }
 private:
 	bool alive;
+	bool supermode;
+	char color;
 	int ss_col, ss_row;
 	int _x;
 	int _y;
