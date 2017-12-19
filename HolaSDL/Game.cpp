@@ -1,6 +1,7 @@
 #include "Game.h"
 
 
+
 Game::Game():exit(false), currentLevel(0), lives(3), score(0), foodPoints(100), vitaminPoints(300)
 {
 	initSDL();
@@ -33,13 +34,13 @@ bool Game::canMoveTo(int x, int y)
 	return gameMap->isEmpty(x, y);// && !tiGhost(x, y);
 }
 
-bool Game::tiGhost(int x, int y)
-{
-
-
-
-	return true;
-}
+//bool Game::tiGhost(int x, int y)
+//{
+//
+//
+//
+//	return true;
+//}
 
 string Game::getTextPath(Texture_t text)
 {
@@ -223,6 +224,7 @@ void Game::render()
 	gameMap->render();
 	pacman->render();
 	for (int i = 0; i < 4; i++) {
+		if(&Ghost::isAlive)
 		ghosts[i]->render();
 	}
 	

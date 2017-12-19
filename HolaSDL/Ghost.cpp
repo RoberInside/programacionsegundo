@@ -1,18 +1,19 @@
 #include "Ghost.h"
 #include "Game.h"
 
-Ghost::Ghost(Game* g, int x, int y, int color):pGame(g)
+Ghost::Ghost(Game* g, int x, int y, int color)
 {
-	_x = y;
-	_y = x;
+	pGame = g;
+	posIniX = y;
+	posIniY = x;
 	ss_col = color * 2;
 	ss_row = 0;
 
 	_rect.x = _rect.y = _rect.w = _rect.h = 0;
 	pGame->rectToTile(_rect);
-	_rect.x = _x * _rect.w;
-	_rect.y = _y * _rect.h;
-	gText = pGame->getTexture(Game::Texture_t::tPjes);
+	_rect.x = posIniX * _rect.w;
+	_rect.y = posIniY * _rect.h;
+	text = pGame->getTexture(Game::Texture_t::tPjes);
 	
 	alive = true;
 }
@@ -20,7 +21,11 @@ Ghost::Ghost(Game* g, int x, int y, int color):pGame(g)
 
 Ghost::~Ghost()
 {
-	delete gText;
+	delete pGame;
+	pGame = nullptr;
+
+	delete text;
+	text = nullptr;
 }
 
 void Ghost::update()
@@ -32,18 +37,12 @@ void Ghost::update()
 
 void Ghost::render()
 {
-	if (alive) {
-		SDL_Rect rect;
-		rect.x = rect.y = rect.w = rect.h = 0;
-		pGame->rectToTile(rect);
-		rect.x = _x * rect.w;
-		rect.y = _y * rect.h;
 
-		if (ss_col % 2 == 0) ss_col++;
-		else ss_col--;
+	if (ss_col % 2 == 0) ss_col++;
+	else ss_col--;
 
-		gText->renderFrame(pGame->getRenderer(), rect, ss_row, ss_col, SDL_FLIP_NONE);
-	}
+	text->renderFrame(pGame->getRenderer(), _rect, ss_row, ss_col, SDL_FLIP_NONE);
+	
 }
 
 void Ghost::kill()//Provisional
@@ -53,62 +52,62 @@ void Ghost::kill()//Provisional
 
 void Ghost::move()
 {
-	int nx = _x;
-	int ny = _y;	
+	int nx = posIniX;
+	int ny = posIniY;	
 	int randomDir = rand() % 4;
 
 	switch (randomDir)
 	{
-	case 3: //arriba
+	case 0: //arriba
 		ny--;
 		break;
 	case 1: //abajo
 		ny++;
 		break;
-	case 0: //dcha
+	case 2: //dcha
 		nx++;
 		break;
-	case 2: //izda
+	case 3: //izda
 		nx--;
 		break;
 	default:
 		break;
 	}
 	if (pGame->canMoveTo(ny, nx)) {
-		_x = nx;
-		_y = ny;
+		posIniX = nx;
+		posIniY = ny;
 
 		ss_row = randomDir;
-		_rect.x = _x * _rect.w;
-		_rect.y = _y * _rect.h;
+		_rect.x = posIniX * _rect.w;
+		_rect.y = posIniY * _rect.h;
 
 	}
 	else { // esta modificacion la he depurado y responde bien pero apenas se nota ya que
 		//sigue siendo aleatorio y no se me ocurria otra cosa de momento falta poner que
 		//no se superpongan los fantasmas en el canMoveTo pero no se me ocurria como
-		if (nx > _x && pGame->canMoveTo(ny, nx - 2)) { // si no puede a la dcha, se mueve a
+		if (nx > posIniX && pGame->canMoveTo(ny, nx - 2)) { // si no puede a la dcha, se mueve a
 													 // la izda si esta disponible
-			_x = nx - 2;
+			posIniX = nx - 2;
 			ss_row = randomDir;
 		}
-		else if (nx < _x && pGame->canMoveTo(ny, nx + 2)) {// si no puede a la izda, 
+		else if (nx < posIniX && pGame->canMoveTo(ny, nx + 2)) {// si no puede a la izda, 
 												// se mueve a la dcha si esta disponible
-			_x = nx + 2;
+			posIniX = nx + 2;
 			ss_row = randomDir;
 		}
-		if (ny > _y && pGame->canMoveTo(ny - 2, nx)) {// si no puede abajo, se mueve arriba 
+		if (ny > posIniY && pGame->canMoveTo(ny - 2, nx)) {// si no puede abajo, se mueve arriba 
 												   // si esta disponible
-			_y = ny - 2;
+			posIniY = ny - 2;
 			ss_row = randomDir;
 		}
-		else if (ny < _y && pGame->canMoveTo(ny + 2, nx)) {// si no puede arriba, se mueve
+		else if (ny < posIniY && pGame->canMoveTo(ny + 2, nx)) {// si no puede arriba, se mueve
 														// abajo si esta disponible
-			_y = ny + 2;
+			posIniY = ny + 2;
 			ss_row = randomDir;
 		}
-
-		_rect.x = _x * _rect.w;
-		_rect.y = _y * _rect.h;
+		
+		_rect.x = posIniX * _rect.w;
+		_rect.y = posIniY * _rect.h;
 
 	}
 

@@ -7,8 +7,10 @@
 #include "Texture.h"
 #include "Ghost.h"
 #include "GameMap.h"
-#include "Food.h"
-#include "Vitamin.h"
+
+
+
+
 #include <string>
 #include <iostream>
 #include <fstream>

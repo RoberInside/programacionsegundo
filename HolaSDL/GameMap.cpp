@@ -1,8 +1,9 @@
 #include "GameMap.h"
 #include "Game.h"
 
-GameMap::GameMap(Game* game, size_t rows, size_t cols) :pGame(game), _rows(rows), _cols(cols)
+GameMap::GameMap(Game* game, size_t rows, size_t cols) :_rows(rows), _cols(cols)
 {
+	pGame = game;
 	//INIT BOARD/////////
 	board = new MapCell_t*[rows];
 
@@ -89,6 +90,15 @@ void GameMap::render()
 
 		}
 	}
+}
+
+
+void GameMap::loadFromFile()
+{
+}
+
+void GameMap::saveToFile()
+{
 }
 
 bool GameMap::isInside(int x, int y)const// estaba mal planteado

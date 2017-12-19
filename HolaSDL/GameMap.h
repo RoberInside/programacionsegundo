@@ -1,10 +1,8 @@
 #ifndef _H_GAMEMAP_H_
 #define _H_GAMEMAP_H_
-#include "Texture.h"
 
-#include <string>
-#include <vector>
-class Game;
+#include "GameObject.h"
+
 using namespace std;
 enum class MapCell_t {
 	Empty,
@@ -13,13 +11,13 @@ enum class MapCell_t {
 	Vitamins
 };
 
-class GameMap
+class GameMap: public GameObject
 {
 	friend class Game;	
 	
 public:
 	GameMap(Game* game, size_t rows, size_t cols);
-	~GameMap();
+	virtual ~GameMap();
 
 	void setAt(MapCell_t type, size_t x, size_t y);
 	bool isAt(MapCell_t type, size_t x, size_t y) const;
@@ -29,13 +27,18 @@ public:
 	size_t getCols()const { return _cols; }
 
 	void render();
+
+	virtual void update() {}
+	virtual void loadFromFile();
+	virtual void saveToFile();
+
 private:
 	bool isInside(int x, int y)const;
 	size_t _cols, _rows;
 	MapCell_t** board;
 
 	bool* visited;
-	Game* pGame;
+	
 
 	SDL_Rect rect;
 
