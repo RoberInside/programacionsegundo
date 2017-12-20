@@ -51,7 +51,7 @@
     <ClCompile Include="SmartGhost.cpp">
       <Filter>Archivos de código fuente\GameObjects\GameCharacters</Filter>
     </ClCompile>
-    <ClCompile Include="PacmanFile.cpp">
+    <ClCompile Include="FileSystem.cpp">
       <Filter>Archivos de código fuente</Filter>
     </ClCompile>
   </ItemGroup>
@@ -80,7 +80,7 @@
     <ClInclude Include="SmartGhost.h">
       <Filter>Archivos de encabezado\GameObjects\GameCharacters</Filter>
     </ClInclude>
-    <ClInclude Include="PacmanFile.h">
+    <ClInclude Include="FileSystem.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
   </ItemGroup>

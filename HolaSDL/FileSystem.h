@@ -1,5 +1,5 @@
-#ifndef _H_PACMAN_FILE_H_
-#define _H_PACMAN_FILE_H_
+#ifndef _H_FILE_SYSTEM_H_
+#define _H_FILE_SYSTEM_H_
 
 #include <string>
 #include <vector>
@@ -8,7 +8,7 @@
 
 using namespace std;
 
-class PacmanFile
+class FileSystem
 {
 public:
 	struct Par {
@@ -39,8 +39,8 @@ public:
 	};
 public:
 
-	PacmanFile(string fileName);
-	~PacmanFile();
+	FileSystem(string fileName);
+	~FileSystem();
 
 	bool save();
 
@@ -61,5 +61,5 @@ private:
 
 
 };
-#endif // !_H_PACMAN_FILE_H_
+#endif // !_H_FILE_SYSTEM_H_
 

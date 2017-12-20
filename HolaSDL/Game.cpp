@@ -34,13 +34,6 @@ bool Game::canMoveTo(int x, int y)
 	return gameMap->isEmpty(x, y);// && !tiGhost(x, y);
 }
 
-//bool Game::tiGhost(int x, int y)
-//{
-//
-//
-//
-//	return true;
-//}
 
 string Game::getTextPath(Texture_t text)
 {
@@ -113,66 +106,7 @@ void Game::freeMedia()
 
 bool Game::initBoard(string path) {
 	reset();
-	ifstream in(path);
-	char buffer;
-	size_t rows, cols, ghost_count = 0;
-	in >> rows >> cols;
-	setTileSize(rows, cols);
 
-	gameMap = new GameMap(this, rows, cols); 
-
-	for (size_t i = 0; i < rows; i++)
-	{
-		for (size_t j = 0; j < cols; j++)
-		{
-			in >> buffer;
-
-			if (buffer == '0') {
-				gameMap->setAt(MapCell_t::Empty, i, j); 
-			}
-			else if (buffer == '1') {
-				gameMap->setAt(MapCell_t::Wall, i, j);
-			}
-			else if (buffer == '2') {
-				gameMap->setAt(MapCell_t::Food, i, j);
-			}
-			else if (buffer == '3') {
-				gameMap->setAt(MapCell_t::Vitamins, i, j);
-				
-			}
-			else if (buffer == '4') { //si no ponia empty no salian del cuadrado
-				gameMap->setAt(MapCell_t::Empty, i, j);
-			}
-			else if (buffer == '5') {
-				gameMap->setAt(MapCell_t::Empty, i, j);
-				ghosts[0] = new Ghost(this, i, j, 0);
-				
-			}
-			else if (buffer == '6') {
-				gameMap->setAt(MapCell_t::Empty, i, j);
-				ghosts[1] = new Ghost(this, i, j, 1);
-
-			}
-			else if (buffer == '7') {
-				gameMap->setAt(MapCell_t::Empty, i, j);
-				ghosts[2] = new Ghost(this, i, j, 2);
-
-			}
-			else if (buffer == '8') {
-				gameMap->setAt(MapCell_t::Empty, i, j);
-				ghosts[3] = new Ghost(this, i, j, 3);
-
-			}		
-			else if (buffer == '9') {
-				gameMap->setAt(MapCell_t::Empty, i, j);
-				pacman = new Pacman(this, i, j);
-			}
-				
-				
-			}
-		}
-	
-	return true;
 }
 
 void Game::run() {

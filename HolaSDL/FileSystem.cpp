@@ -1,8 +1,8 @@
-#include "PacmanFile.h"
+#include "FileSystem.h"
 
 
 
-PacmanFile::PacmanFile(string fileName):_fileName(fileName)
+FileSystem::FileSystem(string fileName):_fileName(fileName)
 {
 	int buffer;
 	GhostData gBuffer;
@@ -37,11 +37,11 @@ PacmanFile::PacmanFile(string fileName):_fileName(fileName)
 }
 
 
-PacmanFile::~PacmanFile()
+FileSystem::~FileSystem()
 {
 }
 
-bool PacmanFile::save()
+bool FileSystem::save()
 {//TODO: Control de fallos y excepciones
 	int buffer;
 	fstream s(_fileName);

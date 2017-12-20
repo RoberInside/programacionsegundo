@@ -1,19 +1,19 @@
 #include "GameMap.h"
 #include "Game.h"
 
-GameMap::GameMap(Game* game, size_t rows, size_t cols) :_rows(rows), _cols(cols)
+GameMap::GameMap(Game* game)
 {
 	pGame = game;
+
+	_rows = pGame->getFileSystem()->getMapData()->rows;
+	_cols = pGame->getFileSystem()->getMapData()->cols;
 	//INIT BOARD/////////
-	board = new MapCell_t*[rows];
+	board = new MapCell_t*[_rows];
 
-	for (size_t i = 0; i < rows; i++)
+	for (size_t i = 0; i < _rows; i++)
 	{
-		board[i] = new MapCell_t[cols];
+		board[i] = new MapCell_t[_cols];
 	}
-	//INIT VISIT REGISTER
-	visited = new bool[rows*cols];
-
 	//FORMAT TILE
 	rect.x = rect.y = rect.w = rect.h = 0;
 	pGame->rectToTile(rect);
@@ -26,6 +26,7 @@ GameMap::GameMap(Game* game, size_t rows, size_t cols) :_rows(rows), _cols(cols)
 	foodText	= pGame->getTexture(Game::Texture_t::tFood);
 
 	emptyText	= pGame->getTexture(Game::Texture_t::tPjes);
+
 }
 
 
@@ -44,6 +45,24 @@ GameMap::~GameMap()
 	board = nullptr;
 }
 
+void GameMap::loadFromFile() {
+	for (int i = 0; i < _rows; i++) {
+		for (size_t j = 0; j < _cols; j++)
+		{
+			board[i][j] = (MapCell_t)pGame->getFileSystem()->getMapData()->map[i*_cols + j];
+		}
+	}
+}
+
+void GameMap::saveToFile() {
+	for (size_t i = 0; i < _rows; i++)
+	{
+		for (size_t j = 0; j < _cols; j++)
+		{
+			pGame->getFileSystem()->getMapData()->map[i*_cols + j] = board[i][j];
+		}
+	}
+}
 void GameMap::setAt(MapCell_t type, size_t x, size_t y)
 {
 	if (isInside(x, y))

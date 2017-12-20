@@ -4,11 +4,11 @@
 #include "GameObject.h"
 
 using namespace std;
-enum class MapCell_t {
-	Empty,
-	Wall,
-	Food,
-	Vitamins
+enum MapCell_t {
+	Empty = 0,
+	Wall = 1,
+	Vitamins = 2,
+	Food = 3
 };
 
 class GameMap: public GameObject
@@ -16,7 +16,7 @@ class GameMap: public GameObject
 	friend class Game;	
 	
 public:
-	GameMap(Game* game, size_t rows, size_t cols);
+	GameMap(Game* game);
 	virtual ~GameMap();
 
 	void setAt(MapCell_t type, size_t x, size_t y);
@@ -28,9 +28,9 @@ public:
 
 	void render();
 
-	virtual void update() {}
-	virtual void loadFromFile();
-	virtual void saveToFile();
+	void update() {};
+	void loadFromFile();
+	void saveToFile();
 
 private:
 	bool isInside(int x, int y)const;

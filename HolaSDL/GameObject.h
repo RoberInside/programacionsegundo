@@ -24,5 +24,6 @@ public:
 
 protected:
 	Game* pGame;
+	FileSystem* fileSystem_ptr;
 };
 #endif //!_H_GAME_OBJECT_H_

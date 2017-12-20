@@ -73,7 +73,7 @@
     <ClCompile Include="Ghost.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Pacman.cpp" />
-    <ClCompile Include="PacmanFile.cpp" />
+    <ClCompile Include="FileSystem.cpp" />
     <ClCompile Include="SmartGhost.cpp" />
     <ClCompile Include="Texture.cpp" />
   </ItemGroup>
@@ -84,7 +84,7 @@
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="Ghost.h" />
     <ClInclude Include="Pacman.h" />
-    <ClInclude Include="PacmanFile.h" />
+    <ClInclude Include="FileSystem.h" />
     <ClInclude Include="SmartGhost.h" />
     <ClInclude Include="Texture.h" />
   </ItemGroup>

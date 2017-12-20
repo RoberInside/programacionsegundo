@@ -7,6 +7,7 @@
 #include "Texture.h"
 #include "Ghost.h"
 #include "GameMap.h"
+#include "FileSystem.h"
 
 
 
@@ -40,12 +41,13 @@ public:
 	void rectToTile(SDL_Rect & rawRect);
 	SDL_Renderer* getRenderer() { return renderer; }
 	Direction getNextDir() { return nextDir; }
-	Texture* getTexture(Texture_t type) {
+	inline Texture* getTexture(Texture_t type) {
 		return textures[type]; 
 	};
 	bool canMoveTo(int x, int y);
-	bool tiGhost(int x, int y);// there is(ti)
 	string getTextPath(Texture_t text);
+
+	inline FileSystem* getFileSystem() { return fileSystem; }
 private:
 	bool initSDL();
 	void closeSDL();
@@ -75,6 +77,7 @@ private:
 	vector <string> texts_paths;
 	vector <Texture*> textures;
 	size_t currentLevel;
+	FileSystem* fileSystem;
 	GameMap* gameMap;
 	Pacman* pacman;
 	Direction nextDir;
