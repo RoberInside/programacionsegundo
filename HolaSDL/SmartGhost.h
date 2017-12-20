@@ -3,7 +3,7 @@
 class SmartGhost : public Ghost
 {
 public:
-	SmartGhost(Game* g, int x, int y, int color) ;
+	SmartGhost(Game* g, int id) ;
 	virtual ~SmartGhost();
 
 	void update();
@@ -12,6 +12,5 @@ public:
 
 private:
 	size_t age;
-
 };
 

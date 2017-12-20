@@ -6,6 +6,9 @@
 #include <iostream>
 #include <fstream>
 
+#define NORMAL 0
+#define SUPER 1
+
 using namespace std;
 
 class FileSystem

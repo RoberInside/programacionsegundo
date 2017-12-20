@@ -3,10 +3,13 @@
 #include "GameCharacter.h"
 #include <stdlib.h>
 
+#define ghostsData pGame->getFileSystem()->getGhostsData()
+#define thisGhostData pGame->getFileSystem()->getGhostsData()->ghosts[_id]
+
 class Ghost: public GameCharacter
 {
 public:
-	Ghost(Game* g, int x, int y, int color);
+	Ghost(Game* g, int id);
 	virtual ~Ghost();
 
 	void update();
@@ -17,11 +20,14 @@ public:
 	
 	void kill();
 
+	virtual void loadFromFile();
+	virtual void saveToFile();
+
 	bool isAlive() { return alive; }
-private:
+protected:
 	bool alive;
 	int ss_col, ss_row;
-		
+	int _id;
 	
 	void move();
 };

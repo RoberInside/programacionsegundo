@@ -76,6 +76,12 @@ void Pacman::move()
 
 	}
 }
+
+bool Pacman::kill()
+{
+	lifes--;
+	return lifes <= 0;
+}
 void Pacman::loadFromFile() {
 	posIniX = pGame->getFileSystem()->getPacmanData()->posini.x;
 	posIniY = pGame->getFileSystem()->getPacmanData()->posini.y;

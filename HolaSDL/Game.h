@@ -3,18 +3,18 @@
 #pragma once
 #include <SDL.h>
 #include <vector>
+#include <list>
+#include <string>
+#include <iostream>
+#include <fstream>
+
 #include "Pacman.h"
 #include "Texture.h"
 #include "Ghost.h"
 #include "GameMap.h"
+#include "SmartGhost.h"
 #include "FileSystem.h"
 
-
-
-
-#include <string>
-#include <iostream>
-#include <fstream>
 #define DEBUG
 #define MAX_TICKS_PER_SECOND 3
 #define	FPS 6
@@ -51,7 +51,7 @@ public:
 private:
 	bool initSDL();
 	void closeSDL();
-	bool initBoard(string path);
+	bool initObjects(string path);
 	void setTileSize(size_t rows, size_t cols);
 
 	bool initMedia();
@@ -76,6 +76,7 @@ private:
 	vector <string> pathToLevels;
 	vector <string> texts_paths;
 	vector <Texture*> textures;
+	list <GameCharacter*> objects;
 	size_t currentLevel;
 	FileSystem* fileSystem;
 	GameMap* gameMap;
@@ -84,7 +85,7 @@ private:
 	SDL_Event e;
 	SDL_Rect tile;
 	Ghost* ghosts[4];
-	int lives;
+	int level;
 	int score;
 	const int foodPoints;
 	const int vitaminPoints;

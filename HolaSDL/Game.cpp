@@ -2,11 +2,11 @@
 
 
 
-Game::Game():exit(false), currentLevel(0), lives(3), score(0), foodPoints(100), vitaminPoints(300)
+Game::Game():exit(false), currentLevel(0), score(0), foodPoints(100), vitaminPoints(300)
 {
 	initSDL();
 	initMedia();
-	initBoard(pathToLevels[currentLevel]);//TODO: poner una ruta por defecto, implementar un mapa
+	initObjects(pathToLevels[currentLevel]);//TODO: poner una ruta por defecto, implementar un mapa
 }
 
 Game::~Game()
@@ -99,17 +99,31 @@ void Game::freeMedia()
 	
 	for (size_t i = 0; i < 4; i++)
 	{
-	delete ghosts[i];
+		delete ghosts[i];
 	}
-	
 }
 
-bool Game::initBoard(string path) {
+bool Game::initObjects(string path) {
 	reset();
 	fileSystem = new FileSystem(path);
+	level = fileSystem->getGameData()->level;
+	score = fileSystem->getGameData()->score;
+
 
 	gameMap = new GameMap(this);
 	pacman = new Pacman(this);
+	objects.push_back(pacman);
+	for (size_t i = 0; i < fileSystem->getGhostsData()->numGhosts; i++)
+	{
+		if (fileSystem->getGhostsData()->ghosts[i].type) {
+			objects.push_back(new SmartGhost(this, i));
+		}
+		else {
+			objects.push_back(new Ghost(this, i));
+		}
+	}
+
+
 }
 
 void Game::run() {
@@ -199,13 +213,13 @@ void Game::handleEvents()
 			case SDLK_PLUS:
 				if (currentLevel < 5) {
 					currentLevel++;
-					initBoard(pathToLevels[currentLevel]);
+					initObjects(pathToLevels[currentLevel]);
 				}
 				break;
 			case SDLK_MINUS:
 				if (currentLevel > 0) {
 					currentLevel--;
-					initBoard(pathToLevels[currentLevel]);
+					initObjects(pathToLevels[currentLevel]);
 				}
 				break;
 #endif // DEBUG
@@ -248,14 +262,13 @@ void Game::checkCollisions() {
 void Game::killPacman()
 {
 	//Provisional!!
-	lives--;
-	exit = lives <= 0;
+	if (pacman->kill()) {
+		//fin del juego
+	}	
 }
 
 void Game::reset()
 {
-	lives = 3;
-	score = 0;
 }
 
 #ifdef DEBUG

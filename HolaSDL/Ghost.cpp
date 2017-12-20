@@ -1,12 +1,11 @@
 #include "Ghost.h"
 #include "Game.h"
 
-Ghost::Ghost(Game* g, int x, int y, int color)
+Ghost::Ghost(Game* g, int id)
 {
 	pGame = g;
-	posIniX = y;
-	posIniY = x;
-	ss_col = color * 2;
+	loadFromFile();
+	//ss_col = color * 2;
 	ss_row = 0;
 
 	_rect.x = _rect.y = _rect.w = _rect.h = 0;
@@ -21,9 +20,6 @@ Ghost::Ghost(Game* g, int x, int y, int color)
 
 Ghost::~Ghost()
 {
-	delete pGame;
-	pGame = nullptr;
-
 	delete text;
 	text = nullptr;
 }
@@ -48,6 +44,30 @@ void Ghost::render()
 void Ghost::kill()//Provisional
 {
 	alive = false;
+}
+
+void Ghost::loadFromFile()
+{
+	posActX = thisGhostData.pos.x;
+	posActY = thisGhostData.pos.y;
+
+	posIniX = thisGhostData.posini.x;
+	posIniY = thisGhostData.posini.y;
+
+	dirX = thisGhostData.dir.x;
+	dirY = thisGhostData.dir.y;
+}
+
+void Ghost::saveToFile()
+{
+	thisGhostData.pos.x = posActX;
+	thisGhostData.pos.y = posActY;
+
+	thisGhostData.posini.x = posIniX;
+	thisGhostData.posini.y = posIniY;
+
+	thisGhostData.dir.x = dirX;
+	thisGhostData.dir.y = dirY;
 }
 
 void Ghost::move()
@@ -112,3 +132,4 @@ void Ghost::move()
 	}
 
 }
+

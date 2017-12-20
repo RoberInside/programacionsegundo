@@ -8,13 +8,13 @@
 #include <fstream>
 
 
-class Texture; class Game;
+class Texture; class Game; class FileSystem;
 class GameObject
 {
 public:
 
-	GameObject() {}
-	virtual ~GameObject() {}
+	GameObject() {};
+	virtual ~GameObject() {};
 	
 
 	virtual void render() = 0;

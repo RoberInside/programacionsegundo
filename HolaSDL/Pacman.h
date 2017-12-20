@@ -17,6 +17,8 @@ public:
 	int getX() const { return posIniY; }
 	int getY() const { return posIniX; }
 
+	bool kill();
+	inline int getLifes() const { return lifes; }
 	void setSuperMode() { superMode = true; };
 	bool isSuperMode() { return superMode; }
 
