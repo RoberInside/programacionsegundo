@@ -42,6 +42,8 @@ public:
 	PacmanFile(string fileName);
 	~PacmanFile();
 
+	bool save();
+
 	inline GameData*	getGameData()		 { return &gameData;				};
 	inline MapData*		getMapData()		 { return &mapData;					};
 	inline GhostsData*	getGhostsData()		 { return &ghostsData;				};
@@ -54,6 +56,8 @@ private:
 	MapData mapData;
 	GhostsData ghostsData;
 	PacmanData pacmanData;
+
+	string _fileName;
 
 
 };
