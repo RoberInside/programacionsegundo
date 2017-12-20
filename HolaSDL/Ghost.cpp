@@ -38,7 +38,7 @@ void Ghost::render()
 
 	if (supermode) {
 		if (alive) {
-			ss_row % 2 ? ss_row++ : ss_row--;
+			//ss_row % 4 ? ss_row = 0 : ;
 		}
 		else {
 			ss_row = 2;
