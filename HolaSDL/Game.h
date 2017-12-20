@@ -7,7 +7,7 @@
 #include "Texture.h"
 #include "Ghost.h"
 #include "GameMap.h"
-
+#include <list>
 
 
 
@@ -17,7 +17,7 @@
 #define DEBUG
 #define MAX_TICKS_PER_SECOND 3
 #define	FPS 6
-#define NUM_TEXTURES 4
+#define NUM_TEXTURES 5
 
 using namespace std;
 
@@ -33,7 +33,8 @@ public:
 		tWall = 0,		
 		tVitamin = 1,
 		tPjes = 2,
-		tFood = 3
+		tFood = 3,
+		tFont = 4
 		
 	};
 	enum class Direction{UP = 3, DOWN = 1, RIGHT = 0, LEFT = 2};
@@ -43,8 +44,12 @@ public:
 	Texture* getTexture(Texture_t type) {
 		return textures[type]; 
 	};
+	SDL_Color getColor() { return fontColor; }
 	bool canMoveTo(int x, int y);
-	bool tiGhost(int x, int y);// there is(ti)
+
+	int getScore() { return score; }
+	
+	
 	string getTextPath(Texture_t text);
 private:
 	bool initSDL();
@@ -65,7 +70,7 @@ private:
 	void showDebugInfo();
 #endif // DEBUG
 
-private:
+
 	SDL_Window* window = nullptr;
 	SDL_Renderer* renderer = nullptr;
 	size_t winWidth = 800;
@@ -76,11 +81,22 @@ private:
 	vector <Texture*> textures;
 	size_t currentLevel;
 	GameMap* gameMap;
-	Pacman* pacman;
 	Direction nextDir;
+
+	Ghost* ghosts[4];
+	Pacman* pacman;
+
+	list <GameCharacter*> Chrs;
+	list <GameCharacter*>::iterator it = Chrs.begin();
+	void llenarLista();
+	
+	//Fuente
+	Texture* font;
+	SDL_Color fontColor;
+	
+
 	SDL_Event e;
 	SDL_Rect tile;
-	Ghost* ghosts[4];
 	int lives;
 	int score;
 	const int foodPoints;

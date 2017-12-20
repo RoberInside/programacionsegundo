@@ -9,7 +9,7 @@ public:
 	GameCharacter();
     virtual ~GameCharacter();
 
-	virtual void render(); //falta definir
+	virtual void render();
 	virtual void loadFromFile(); //falta definir
 	virtual void saveToFile(); //falta definir
 

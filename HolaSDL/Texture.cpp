@@ -7,6 +7,7 @@ Texture::Texture(size_t const ROWS, size_t const COLS)
 	_ROWS = ROWS;
 	_COLS = COLS;
 	textHeight = textWidth = 0;
+	
 
 }
 
@@ -15,6 +16,7 @@ Texture::Texture()
 	texture = nullptr;
 	_COLS = _ROWS = 1;
 	textHeight = textWidth = 0;
+	
 }
 
 
@@ -59,3 +61,34 @@ void Texture::renderFrame(SDL_Renderer* renderer, const SDL_Rect& destRect,
 	SDL_RenderCopyEx(renderer, texture, &rect, &destRect, 0, 0, flip);
 	
 }
+
+bool Texture::loadFromText(SDL_Renderer* renderer, const string text, SDL_Color color)
+{
+	SDL_Surface* textSurface = font.generateSurface(text, color);
+	if (textSurface == nullptr)
+		cout << "Unable	to	render	text	surface!	SDL_ttf	Error:	"
+		<< TTF_GetError() << "\n";
+	else {
+		
+		texture = SDL_CreateTextureFromSurface(renderer, textSurface);
+		if (texture == nullptr) {
+			cout << "Unable	to	create	texture	from	text!	SDL	Error:	"
+				<< SDL_GetError() << "\n";
+			textWidth = textHeight = 0;
+		}
+		else {
+			textWidth = textSurface->w;
+			textHeight = textSurface->h;
+		}
+		SDL_FreeSurface(textSurface);
+	}
+	return	texture != nullptr;
+}
+
+bool Texture::loadFuente(string filename, int size)
+{
+	font.load(filename, size);
+	return true;
+}
+
+

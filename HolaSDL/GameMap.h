@@ -8,7 +8,8 @@ enum class MapCell_t {
 	Empty,
 	Wall,
 	Food,
-	Vitamins
+	Vitamins,
+	Font
 };
 
 class GameMap: public GameObject
@@ -31,6 +32,8 @@ public:
 	virtual void update() {}
 	virtual void loadFromFile();
 	virtual void saveToFile();
+	
+
 
 private:
 	bool isInside(int x, int y)const;
@@ -46,6 +49,7 @@ private:
 	Texture* emptyText;
 	Texture* vitiminText;
 	Texture* foodText;
+	Texture* fontText;
 
 };
 #endif

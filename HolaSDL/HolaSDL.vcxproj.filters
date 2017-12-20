@@ -51,6 +51,12 @@
     <ClCompile Include="SmartGhost.cpp">
       <Filter>Archivos de código fuente\GameObjects\GameCharacters</Filter>
     </ClCompile>
+    <ClCompile Include="Font.cpp">
+      <Filter>Archivos de código fuente</Filter>
+    </ClCompile>
+    <ClCompile Include="HUD.cpp">
+      <Filter>Archivos de código fuente</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h">
@@ -76,6 +82,12 @@
     </ClInclude>
     <ClInclude Include="SmartGhost.h">
       <Filter>Archivos de encabezado\GameObjects\GameCharacters</Filter>
+    </ClInclude>
+    <ClInclude Include="Font.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="HUD.h">
+      <Filter>Archivos de encabezado</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -34,13 +34,18 @@ bool Game::canMoveTo(int x, int y)
 	return gameMap->isEmpty(x, y);// && !tiGhost(x, y);
 }
 
-//bool Game::tiGhost(int x, int y)
-//{
-//
-//
-//
-//	return true;
-//}
+void Game::llenarLista() {
+
+	Chrs.push_front(pacman);
+	Chrs.push_front(ghosts[0]);
+	Chrs.push_front(ghosts[1]);
+	Chrs.push_front(ghosts[2]);
+	Chrs.push_front(ghosts[3]);
+	
+	
+
+}
+
 
 string Game::getTextPath(Texture_t text)
 {
@@ -73,6 +78,9 @@ void Game::closeSDL()
 
 bool Game::initMedia()
 {
+	//Init font
+	 TTF_Init();
+	///////////
 	pathToLevels = {
 		"..\\maps\\test1.dat",
 		"..\\maps\\level01.dat",
@@ -86,6 +94,7 @@ bool Game::initMedia()
 	texts_paths[tVitamin] = "..\\images\\vitamin.png";
 	texts_paths[tPjes] = "..\\images\\characters1.png";
 	texts_paths[tFood] = "..\\images\\food.png";
+	texts_paths[tFont] = "..\\fonts\\third_rail.ttf";
 	
 	textures.resize(NUM_TEXTURES);
 	textures[tWall] = new Texture();
@@ -96,7 +105,18 @@ bool Game::initMedia()
 	textures[tPjes]->load(getRenderer(), texts_paths[tPjes]);
 	textures[tFood] = new Texture();
 	textures[tFood]->load(getRenderer(), texts_paths[tFood]);
+	//fuente
+	textures[tFont] = new Texture();
+	textures[tFont]->loadFuente(texts_paths[tFont], 300);
+	
+	fontColor.r = 250;
+	fontColor.g = 1;
+	fontColor.b = 1;
+
+	
 	//Init Textures
+
+	
 	return true;
 }
 void Game::freeMedia()
@@ -108,7 +128,8 @@ void Game::freeMedia()
 	{
 	delete ghosts[i];
 	}
-	
+	//liberar fuente
+	 TTF_Quit();
 }
 
 bool Game::initBoard(string path) {
@@ -210,11 +231,12 @@ void Game::run() {
 void Game::update()
 {
 	pacman->update();
-	
+	 
 	for (auto g : ghosts) {
 	g->update();
 	}
 	checkCollisions();
+	
 
 }
 void Game::render()
@@ -224,6 +246,7 @@ void Game::render()
 	gameMap->render();
 	pacman->render();
 	for (int i = 0; i < 4; i++) {
+
 		if(&Ghost::isAlive)
 		ghosts[i]->render();
 	}
@@ -296,7 +319,9 @@ void Game::checkCollisions() {
 	if (!gameMap->isAt(MapCell_t::Wall, pacman->getX(), pacman->getY()) || !gameMap->isAt(MapCell_t::Empty, pacman->getX(), pacman->getY())) {
 		// faltaba excluir que no fuesen empty
 		if (gameMap->isAt(MapCell_t::Food, pacman->getX(), pacman->getY())) {
+			
 			score += foodPoints;
+			
 		}
 		else if (gameMap->isAt(MapCell_t::Vitamins, pacman->getX(), pacman->getY())) {
 			score += vitaminPoints;
@@ -329,4 +354,5 @@ void Game::showDebugInfo()
 		<< "Pacman position: " << pacman->getX() << ", " << pacman->getY() << endl
 		<< "Score: " << score << endl;
 }
+
 #endif // DEBUG
