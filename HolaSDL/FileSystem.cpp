@@ -58,7 +58,7 @@ bool FileSystem::save()
 	for (size_t i = 0; i < ghostsData.numGhosts; i++)
 	{
 		s << ghostsData.ghosts[i].type
-			<< ghostsData.ghosts[i].pos.x << ghostsData.ghosts[i].pos.y
+			<< ghostsData.ghosts[i].pos.x	 << ghostsData.ghosts[i].pos.y
 			<< ghostsData.ghosts[i].posini.x << ghostsData.ghosts[i].posini.y
 			<< ghostsData.ghosts[i].dir.x, ghostsData.ghosts[i].dir.y
 			<< ghostsData.ghosts[i].age;

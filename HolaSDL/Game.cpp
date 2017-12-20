@@ -106,7 +106,10 @@ void Game::freeMedia()
 
 bool Game::initBoard(string path) {
 	reset();
+	fileSystem = new FileSystem(path);
 
+	gameMap = new GameMap(this);
+	pacman = new Pacman(this);
 }
 
 void Game::run() {

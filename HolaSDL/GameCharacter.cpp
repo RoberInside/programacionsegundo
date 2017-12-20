@@ -20,11 +20,3 @@ void GameCharacter::render()
 	rect.x = posIniX * rect.w;
 	rect.y = posIniY * rect.h;
 }
-
-void GameCharacter::loadFromFile()
-{
-}
-
-void GameCharacter::saveToFile()
-{
-}

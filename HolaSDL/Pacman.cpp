@@ -2,11 +2,11 @@
 #include "Game.h" //evitar recursion ciclica
 
 
-Pacman::Pacman(Game* g, int x, int y)
+Pacman::Pacman(Game* g)
 {
 	pGame = g;
-	posIniX = y;
-	posIniY = x;
+	loadFromFile();
+
 	ss_col = 10;
 	ss_row = 0;
 
@@ -75,4 +75,32 @@ void Pacman::move()
 		ss_row = (int)pGame->getNextDir();
 
 	}
+}
+void Pacman::loadFromFile() {
+	posIniX = pGame->getFileSystem()->getPacmanData()->posini.x;
+	posIniY = pGame->getFileSystem()->getPacmanData()->posini.y;
+
+	posActX = pGame->getFileSystem()->getPacmanData()->pos.x;
+	posActY = pGame->getFileSystem()->getPacmanData()->pos.y;
+
+	dirX = pGame->getFileSystem()->getPacmanData()->dir.x;
+	dirY = pGame->getFileSystem()->getPacmanData()->dir.y;
+
+	lifes = pGame->getFileSystem()->getPacmanData()->lifes;
+
+	energy = pGame->getFileSystem()->getPacmanData()->energy;
+}
+void Pacman::saveToFile() {
+	pGame->getFileSystem()->getPacmanData()->posini.x = posIniX;
+	pGame->getFileSystem()->getPacmanData()->posini.y = posIniY;
+
+	pGame->getFileSystem()->getPacmanData()->pos.x = posActX;
+	pGame->getFileSystem()->getPacmanData()->pos.y = posActY;
+
+	pGame->getFileSystem()->getPacmanData()->dir.x = dirX;
+	pGame->getFileSystem()->getPacmanData()->dir.y = dirY;
+
+	pGame->getFileSystem()->getPacmanData()->lifes = lifes;
+
+	pGame->getFileSystem()->getPacmanData()->energy = energy;
 }

@@ -8,7 +8,7 @@ const int superModeTime = 5 * 1000;//ms
 class Pacman: public GameCharacter
 {
 public:
-	Pacman(Game* g,int x, int y);
+	Pacman(Game* g);
 	virtual ~Pacman();
 
 	void update();
@@ -19,9 +19,13 @@ public:
 
 	void setSuperMode() { superMode = true; };
 	bool isSuperMode() { return superMode; }
+
+	void loadFromFile();
+	void saveToFile();
 private:
 	int ss_col, ss_row;
-
+	int lifes;
+	int energy;
 	bool superMode;
 	
 	void move();

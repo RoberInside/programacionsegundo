@@ -10,8 +10,6 @@ public:
     virtual ~GameCharacter();
 
 	virtual void render(); //falta definir
-	virtual void loadFromFile(); //falta definir
-	virtual void saveToFile(); //falta definir
 
 protected:
 	int posIniX, posIniY; // posIniX = _x, posIniY = _y
