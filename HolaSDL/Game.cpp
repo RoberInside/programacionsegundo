@@ -1,7 +1,6 @@
 #include "Game.h"
 
 
-
 Game::Game():exit(false), currentLevel(0), score(0), foodPoints(100), vitaminPoints(300)
 {
 	initSDL();
@@ -67,12 +66,8 @@ void Game::closeSDL()
 bool Game::initMedia()
 {
 	pathToLevels = {
-		"..\\maps\\test1.dat",
-		"..\\maps\\level01.dat",
-		"..\\maps\\level02.dat",
-		"..\\maps\\level03.dat",
-		"..\\maps\\level04.dat",
-		"..\\maps\\level05.dat"
+		"..\\maps\\level01.pac",
+		"..\\maps\\level02.pac"
 	};
 	texts_paths.resize(NUM_TEXTURES);
 	texts_paths[tWall] = "..\\images\\wall.png";
@@ -112,14 +107,16 @@ bool Game::initObjects(string path) {
 
 	gameMap = new GameMap(this);
 	pacman = new Pacman(this);
-	objects.push_back(pacman);
+	characters.push_back(pacman);
+	int ghostColor = 0;
 	for (size_t i = 0; i < fileSystem->getGhostsData()->numGhosts; i++)
 	{
 		if (fileSystem->getGhostsData()->ghosts[i].type) {
-			objects.push_back(new SmartGhost(this, i));
+			characters.push_back(new SmartGhost(this, i));
 		}
 		else {
-			objects.push_back(new Ghost(this, i));
+			characters.push_back(new Ghost(this, i, ghostColor));
+			ghostColor = (ghostColor+1) % 4;//We only have 4 normalGhost sprites, so we asset their sprite in range
 		}
 	}
 
@@ -160,10 +157,8 @@ void Game::run() {
 }
 void Game::update()
 {
-	pacman->update();
-	
-	for (auto g : ghosts) {
-	g->update();
+	for (GameCharacter* c : characters) {
+		c->update();
 	}
 	checkCollisions();
 
@@ -173,12 +168,9 @@ void Game::render()
 	SDL_RenderClear(renderer);
 	
 	gameMap->render();
-	pacman->render();
-	for (int i = 0; i < 4; i++) {
-		if(&Ghost::isAlive)
-		ghosts[i]->render();
+	for (GameCharacter* c : characters) {
+		c->render();
 	}
-	
 	SDL_RenderPresent(renderer);
 }
 void Game::handleEvents()
@@ -232,15 +224,19 @@ void Game::handleEvents()
 
 void Game::checkCollisions() {
 	//Collisions with Ghosts
-	for each (Ghost* g in ghosts)
+	auto it = characters.begin();
+	it++;//As we know the pacman is the first node in the list
+	for (;it != characters.end(); it++)
 	{
-		if (g->isAlive()) {
-			if (pacman->getX() == g->getX() &&
-				pacman->getY() == g->getY())
-				if (pacman->isSuperMode())
-					g->kill();
+		if (static_cast<Ghost*>(*it)->isAlive()) {
+			if (pacman->getX() == (*it)->getPosX() &&
+				pacman->getY() == (*it)->getPosY()) 
+			{//Have been a collision
+				if (static_cast<Ghost*>(*it)->isKilleable())
+					static_cast<Ghost*>(*it)->kill();
 				else
 					killPacman();
+			}
 		}
 	}
 	//Collisions with food and vitamins

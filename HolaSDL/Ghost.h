@@ -8,7 +8,7 @@
 class Ghost: public GameCharacter
 {
 public:
-	Ghost(Game* g, int id);
+	Ghost(Game* g, int id, int color);
 	virtual ~Ghost();
 
 	void update();
@@ -19,6 +19,8 @@ public:
 	
 	void kill();
 
+	inline bool isKilleable() const { return killeable; };
+
 	virtual void loadFromFile();
 	virtual void saveToFile();
 
@@ -27,7 +29,7 @@ protected:
 	bool alive;
 	int ss_col, ss_row;
 	int _id;
-	
+	bool killeable;
 	void move();
 };
 

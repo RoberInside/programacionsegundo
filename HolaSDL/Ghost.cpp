@@ -1,11 +1,11 @@
 #include "Ghost.h"
 #include "Game.h"
 
-Ghost::Ghost(Game* g, int id)
+Ghost::Ghost(Game* g, int id, int color)
 {
 	pGame = g;
 	loadFromFile();
-	//ss_col = color * 2;
+	ss_col = color * 2;
 	ss_row = 0;
 
 	_rect.x = _rect.y = _rect.w = _rect.h = 0;

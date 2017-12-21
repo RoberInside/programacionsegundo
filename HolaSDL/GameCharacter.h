@@ -11,6 +11,9 @@ public:
 
 	virtual void render(); //falta definir
 
+	inline int getPosX() const { return posActX; };
+	inline int getPosY() const { return posActY; };
+
 protected:
 	int posIniX, posIniY; // posIniX = _x, posIniY = _y
 	int posActX,  posActY; //esto no lo usamos

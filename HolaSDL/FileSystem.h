@@ -45,7 +45,7 @@ public:
 	FileSystem(string fileName);
 	~FileSystem();
 
-	bool save();
+	bool save(string code);
 
 	inline GameData*	getGameData()		 { return &gameData;				};
 	inline MapData*		getMapData()		 { return &mapData;					};

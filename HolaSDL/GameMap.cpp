@@ -7,6 +7,8 @@ GameMap::GameMap(Game* game)
 
 	_rows = pGame->getFileSystem()->getMapData()->rows;
 	_cols = pGame->getFileSystem()->getMapData()->cols;
+
+
 	//INIT BOARD/////////
 	board = new MapCell_t*[_rows];
 
@@ -27,6 +29,7 @@ GameMap::GameMap(Game* game)
 
 	emptyText	= pGame->getTexture(Game::Texture_t::tPjes);
 
+	loadFromFile();
 }
 
 
@@ -110,7 +113,7 @@ void GameMap::render()
 		}
 	}
 }
-bool GameMap::isInside(int x, int y)const// estaba mal planteado
+bool GameMap::isInside(int x, int y) const
 {
 	return (x >= 0 && y >= 0 && y <(int)_cols && x < (int)_rows);
 }

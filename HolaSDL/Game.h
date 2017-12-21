@@ -78,7 +78,7 @@ private:
 	vector <string> pathToLevels;
 	vector <string> texts_paths;
 	vector <Texture*> textures;
-	list <GameCharacter*> objects;
+	list <GameCharacter*> characters;
 	size_t currentLevel;
 	FileSystem* fileSystem;
 	GameMap* gameMap;

@@ -1,8 +1,9 @@
 #include "SmartGhost.h"
 #include "Game.h"
 
-SmartGhost::SmartGhost(Game* g, int id): Ghost(g, id){}
-
+SmartGhost::SmartGhost(Game* g, int id): Ghost(g, id, 4/*We know they will always have this sprite*/)
+{
+}
 
 SmartGhost::~SmartGhost()
 {

@@ -73,7 +73,6 @@ void Pacman::move()
 		_rect.y = posIniY * _rect.h;
 		
 		ss_row = (int)pGame->getNextDir();
-
 	}
 }
 
@@ -91,7 +90,6 @@ void Pacman::loadFromFile() {
 
 	dirX = pGame->getFileSystem()->getPacmanData()->dir.x;
 	dirY = pGame->getFileSystem()->getPacmanData()->dir.y;
-
 	lifes = pGame->getFileSystem()->getPacmanData()->lifes;
 
 	energy = pGame->getFileSystem()->getPacmanData()->energy;
