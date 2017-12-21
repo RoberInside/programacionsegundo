@@ -72,23 +72,23 @@ bool Game::initMedia()
 		"..\\maps\\level02.pac"
 	};
 	texts_paths.resize(NUM_TEXTURES);
-	texts_paths[tWall] = "..\\images\\wall.png";
-	texts_paths[tVitamin] = "..\\images\\vitamin.png";
-	texts_paths[tPjes] = "..\\images\\characters1.png";
-	texts_paths[tFood] = "..\\images\\food.png";
-	texts_paths[tFont] = "..\\fonts\\third_rail.ttf";
+	texts_paths[tWall]		= "..\\images\\wall.png";
+	texts_paths[tVitamin]	= "..\\images\\vitamin.png";
+	texts_paths[tPjes]		= "..\\images\\characters1.png";
+	texts_paths[tFood]		= "..\\images\\food.png";
+	texts_paths[tFont]		= "..\\fonts\\third_rail.ttf";
 	
 	textures.resize(NUM_TEXTURES);
-	textures[tWall] = new Texture();
+	textures[tWall]		= new Texture();
 	textures[tWall]->load(getRenderer(), texts_paths[tWall]);
-	textures[tVitamin] = new Texture();
+	textures[tVitamin]	= new Texture();
 	textures[tVitamin]->load(getRenderer(), texts_paths[tVitamin]);
-	textures[tPjes] = new Texture(4, 14);
+	textures[tPjes]		= new Texture(4, 14);
 	textures[tPjes]->load(getRenderer(), texts_paths[tPjes]);
-	textures[tFood] = new Texture();
+	textures[tFood]		= new Texture();
 	textures[tFood]->load(getRenderer(), texts_paths[tFood]);
 	//fuente
-	textures[tFont] = new Texture();
+	textures[tFont]		= new Texture();
 	textures[tFont]->loadFuente(texts_paths[tFont], 300);
 	
 	fontColor.r = 250;

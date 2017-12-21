@@ -29,7 +29,7 @@ GameMap::GameMap(Game* game)
 
 	emptyText	= pGame->getTexture(Game::Texture_t::tPjes);
 
-	fontText = pGame->getTexture(Game::Texture_t::tFont);
+	fontText	= pGame->getTexture(Game::Texture_t::tFont);
 
 	loadFromFile();
 }
