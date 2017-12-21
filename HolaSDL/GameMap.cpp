@@ -110,16 +110,6 @@ void GameMap::render()
 		}
 	}
 }
-
-
-void GameMap::loadFromFile()
-{
-}
-
-void GameMap::saveToFile()
-{
-}
-
 bool GameMap::isInside(int x, int y)const// estaba mal planteado
 {
 	return (x >= 0 && y >= 0 && y <(int)_cols && x < (int)_rows);

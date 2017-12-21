@@ -22,6 +22,8 @@
 
 using namespace std;
 
+inline string format(string s) { return s + ".pac"; };
+
 class Game
 {
 

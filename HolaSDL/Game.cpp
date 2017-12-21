@@ -123,7 +123,7 @@ bool Game::initObjects(string path) {
 		}
 	}
 
-
+	return true;
 }
 
 void Game::run() {

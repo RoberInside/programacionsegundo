@@ -3,7 +3,6 @@
 #include "GameCharacter.h"
 #include <stdlib.h>
 
-#define ghostsData pGame->getFileSystem()->getGhostsData()
 #define thisGhostData pGame->getFileSystem()->getGhostsData()->ghosts[_id]
 
 class Ghost: public GameCharacter
