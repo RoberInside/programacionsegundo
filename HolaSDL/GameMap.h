@@ -4,6 +4,7 @@
 #include "GameObject.h"
 
 using namespace std;
+
 enum MapCell_t {
 	Empty = 0,
 	Wall = 1,
@@ -32,6 +33,7 @@ public:
 	void loadFromFile();
 	void saveToFile();
 
+
 private:
 	bool isInside(int x, int y)const;
 	size_t _cols, _rows;
@@ -46,6 +48,7 @@ private:
 	Texture* emptyText;
 	Texture* vitiminText;
 	Texture* foodText;
+	Texture* fontText;
 
 };
 #endif

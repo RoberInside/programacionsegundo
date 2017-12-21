@@ -9,10 +9,11 @@ public:
 	GameCharacter();
     virtual ~GameCharacter();
 
-	virtual void render(); //falta definir
-
 	inline int getPosX() const { return posActX; };
 	inline int getPosY() const { return posActY; };
+
+	virtual void render();
+
 
 protected:
 	int posIniX, posIniY; // posIniX = _x, posIniY = _y

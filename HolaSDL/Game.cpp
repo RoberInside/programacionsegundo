@@ -1,7 +1,6 @@
 #include "Game.h"
 
-
-Game::Game():exit(false), currentLevel(0), score(0), foodPoints(100), vitaminPoints(300)
+Game::Game():exit(false), currentLevel(0), foodPoints(100), vitaminPoints(300)
 {
 	initSDL();
 	initMedia();
@@ -65,6 +64,9 @@ void Game::closeSDL()
 
 bool Game::initMedia()
 {
+	//Init font
+	 TTF_Init();
+	///////////
 	pathToLevels = {
 		"..\\maps\\level01.pac",
 		"..\\maps\\level02.pac"
@@ -74,6 +76,7 @@ bool Game::initMedia()
 	texts_paths[tVitamin] = "..\\images\\vitamin.png";
 	texts_paths[tPjes] = "..\\images\\characters1.png";
 	texts_paths[tFood] = "..\\images\\food.png";
+	texts_paths[tFont] = "..\\fonts\\third_rail.ttf";
 	
 	textures.resize(NUM_TEXTURES);
 	textures[tWall] = new Texture();
@@ -84,7 +87,18 @@ bool Game::initMedia()
 	textures[tPjes]->load(getRenderer(), texts_paths[tPjes]);
 	textures[tFood] = new Texture();
 	textures[tFood]->load(getRenderer(), texts_paths[tFood]);
+	//fuente
+	textures[tFont] = new Texture();
+	textures[tFont]->loadFuente(texts_paths[tFont], 300);
+	
+	fontColor.r = 250;
+	fontColor.g = 1;
+	fontColor.b = 1;
+
+	
 	//Init Textures
+
+	
 	return true;
 }
 void Game::freeMedia()
@@ -96,6 +110,10 @@ void Game::freeMedia()
 	{
 		delete ghosts[i];
 	}
+
+	//liberar fuente
+	 TTF_Quit();
+
 }
 
 bool Game::initObjects(string path) {
@@ -159,8 +177,10 @@ void Game::update()
 {
 	for (GameCharacter* c : characters) {
 		c->update();
+
 	}
 	checkCollisions();
+	
 
 }
 void Game::render()
@@ -168,6 +188,7 @@ void Game::render()
 	SDL_RenderClear(renderer);
 	
 	gameMap->render();
+
 	for (GameCharacter* c : characters) {
 		c->render();
 	}
@@ -243,7 +264,9 @@ void Game::checkCollisions() {
 	if (!gameMap->isAt(MapCell_t::Wall, pacman->getX(), pacman->getY()) || !gameMap->isAt(MapCell_t::Empty, pacman->getX(), pacman->getY())) {
 		// faltaba excluir que no fuesen empty
 		if (gameMap->isAt(MapCell_t::Food, pacman->getX(), pacman->getY())) {
+			
 			score += foodPoints;
+			
 		}
 		else if (gameMap->isAt(MapCell_t::Vitamins, pacman->getX(), pacman->getY())) {
 			score += vitaminPoints;
@@ -275,4 +298,5 @@ void Game::showDebugInfo()
 		<< "Pacman position: " << pacman->getX() << ", " << pacman->getY() << endl
 		<< "Score: " << score << endl;
 }
+
 #endif // DEBUG

@@ -29,6 +29,8 @@ GameMap::GameMap(Game* game)
 
 	emptyText	= pGame->getTexture(Game::Texture_t::tPjes);
 
+	fontText = pGame->getTexture(Game::Texture_t::tFont);
+
 	loadFromFile();
 }
 
@@ -38,12 +40,9 @@ GameMap::~GameMap()
 	if (board != nullptr) {
 		for (size_t i = 0; i < _rows; i++)
 		{
-			for (size_t j = 0; j < _cols; j++)
-			{
-				delete[] board[i];
-			}
-			delete board[i];
+			delete[] board[i];
 		}
+		delete[] board;
 	}
 	board = nullptr;
 }
@@ -85,7 +84,7 @@ bool GameMap::isEmpty(size_t x, size_t y)const
 
 void GameMap::render()
 {
-
+	
 	for (size_t i = 0; i < _rows; i++)
 	{
 		for (size_t j = 0; j < _cols; j++)
@@ -112,6 +111,8 @@ void GameMap::render()
 
 		}
 	}
+	fontText->loadFromText(pGame->getRenderer(), "Puntos " + to_string(pGame->getScore()), pGame->getColor());
+	fontText->render(pGame->getRenderer(), &fontText->font.setRect(50, 200, 10, 560));
 }
 bool GameMap::isInside(int x, int y) const
 {

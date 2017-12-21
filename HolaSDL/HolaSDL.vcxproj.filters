@@ -1,87 +1,27 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="Archivos de encabezado">
-      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
-      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
-    </Filter>
-    <Filter Include="Archivos de recursos">
-      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
-      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
-    </Filter>
-    <Filter Include="Archivos de código fuente">
-      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
-      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
-    </Filter>
-    <Filter Include="Archivos de código fuente\GameObjects">
-      <UniqueIdentifier>{7d98ca3e-7668-4961-b605-a4e853b413ff}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Archivos de encabezado\GameObjects">
-      <UniqueIdentifier>{70989956-ce57-499f-996b-f21c598f809e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Archivos de código fuente\GameObjects\GameCharacters">
-      <UniqueIdentifier>{a2749bfa-95d2-44c8-8c86-8fd9de035201}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Archivos de encabezado\GameObjects\GameCharacters">
-      <UniqueIdentifier>{b914b11a-e921-4324-a3c1-d7aaa66ae82f}</UniqueIdentifier>
-    </Filter>
+    <ClCompile Include="Font.cpp" />
+    <ClCompile Include="Game.cpp" />
+    <ClCompile Include="GameCharacter.cpp" />
+    <ClCompile Include="GameMap.cpp" />
+    <ClCompile Include="Ghost.cpp" />
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="Pacman.cpp" />
+    <ClCompile Include="FileSystem.cpp" />
+    <ClCompile Include="SmartGhost.cpp" />
+    <ClCompile Include="Texture.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="main.cpp">
-      <Filter>Archivos de código fuente</Filter>
-    </ClCompile>
-    <ClCompile Include="Game.cpp">
-      <Filter>Archivos de código fuente</Filter>
-    </ClCompile>
-    <ClCompile Include="Texture.cpp">
-      <Filter>Archivos de código fuente</Filter>
-    </ClCompile>
-    <ClCompile Include="GameCharacter.cpp">
-      <Filter>Archivos de código fuente</Filter>
-    </ClCompile>
-    <ClCompile Include="GameMap.cpp">
-      <Filter>Archivos de código fuente\GameObjects</Filter>
-    </ClCompile>
-    <ClCompile Include="Ghost.cpp">
-      <Filter>Archivos de código fuente\GameObjects\GameCharacters</Filter>
-    </ClCompile>
-    <ClCompile Include="Pacman.cpp">
-      <Filter>Archivos de código fuente\GameObjects\GameCharacters</Filter>
-    </ClCompile>
-    <ClCompile Include="SmartGhost.cpp">
-      <Filter>Archivos de código fuente\GameObjects\GameCharacters</Filter>
-    </ClCompile>
-    <ClCompile Include="FileSystem.cpp">
-      <Filter>Archivos de código fuente</Filter>
-    </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="Game.h">
-      <Filter>Archivos de encabezado</Filter>
-    </ClInclude>
-    <ClInclude Include="Texture.h">
-      <Filter>Archivos de encabezado</Filter>
-    </ClInclude>
-    <ClInclude Include="GameObject.h">
-      <Filter>Archivos de encabezado</Filter>
-    </ClInclude>
-    <ClInclude Include="GameCharacter.h">
-      <Filter>Archivos de encabezado</Filter>
-    </ClInclude>
-    <ClInclude Include="GameMap.h">
-      <Filter>Archivos de encabezado\GameObjects</Filter>
-    </ClInclude>
-    <ClInclude Include="Pacman.h">
-      <Filter>Archivos de encabezado\GameObjects\GameCharacters</Filter>
-    </ClInclude>
-    <ClInclude Include="Ghost.h">
-      <Filter>Archivos de encabezado\GameObjects\GameCharacters</Filter>
-    </ClInclude>
-    <ClInclude Include="SmartGhost.h">
-      <Filter>Archivos de encabezado\GameObjects\GameCharacters</Filter>
-    </ClInclude>
-    <ClInclude Include="FileSystem.h">
-      <Filter>Archivos de encabezado</Filter>
-    </ClInclude>
+    <ClInclude Include="Font.h" />
+    <ClInclude Include="Game.h" />
+    <ClInclude Include="GameCharacter.h" />
+    <ClInclude Include="GameMap.h" />
+    <ClInclude Include="GameObject.h" />
+    <ClInclude Include="Ghost.h" />
+    <ClInclude Include="Pacman.h" />
+    <ClInclude Include="FileSystem.h" />
+    <ClInclude Include="SmartGhost.h" />
+    <ClInclude Include="Texture.h" />
   </ItemGroup>
 </Project>

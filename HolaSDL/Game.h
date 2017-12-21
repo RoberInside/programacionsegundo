@@ -1,6 +1,6 @@
 #ifndef _H_GAME_H_
 #define _H_GAME_H_
-#pragma once
+
 #include <SDL.h>
 #include <vector>
 #include <list>
@@ -8,6 +8,7 @@
 #include <iostream>
 #include <fstream>
 
+#include "Font.h"
 #include "Pacman.h"
 #include "Texture.h"
 #include "Ghost.h"
@@ -18,7 +19,7 @@
 #define DEBUG
 #define MAX_TICKS_PER_SECOND 3
 #define	FPS 6
-#define NUM_TEXTURES 4
+#define NUM_TEXTURES 5
 
 using namespace std;
 
@@ -36,7 +37,8 @@ public:
 		tWall = 0,		
 		tVitamin = 1,
 		tPjes = 2,
-		tFood = 3
+		tFood = 3,
+		tFont = 4
 		
 	};
 	enum class Direction{UP = 3, DOWN = 1, RIGHT = 0, LEFT = 2};
@@ -46,7 +48,11 @@ public:
 	inline Texture* getTexture(Texture_t type) {
 		return textures[type]; 
 	};
+	SDL_Color getColor() { return fontColor; }
 	bool canMoveTo(int x, int y);
+
+	int getScore() { return score; }
+	
 	string getTextPath(Texture_t text);
 
 	inline FileSystem* getFileSystem() { return fileSystem; }
@@ -69,7 +75,7 @@ private:
 	void showDebugInfo();
 #endif // DEBUG
 
-private:
+
 	SDL_Window* window = nullptr;
 	SDL_Renderer* renderer = nullptr;
 	size_t winWidth = 800;
@@ -82,13 +88,23 @@ private:
 	size_t currentLevel;
 	FileSystem* fileSystem;
 	GameMap* gameMap;
-	Pacman* pacman;
 	Direction nextDir;
+
+	Ghost* ghosts[4];
+	Pacman* pacman;
+	
+	//Fuente
+	Texture* font;
+	SDL_Color fontColor;
+	
+
 	SDL_Event e;
 	SDL_Rect tile;
-	Ghost* ghosts[4];
+
 	int level;
+	int lives;
 	int score;
+
 	const int foodPoints;
 	const int vitaminPoints;
 };

@@ -1,6 +1,6 @@
 #ifndef _H_GAME_OBJECT_H_
 #define _H_GAME_OBJECT_H_	
-#pragma once
+
 #include <SDL.h>
 #include <vector>
 #include <string>
